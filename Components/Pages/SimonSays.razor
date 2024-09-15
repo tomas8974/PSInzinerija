@@ -1,0 +1,34 @@
+@page "/SimonSays"
+
+<PageTitle>SimonSays</PageTitle>
+
+<h1>SimonSays</h1>
+
+<div>
+    @for (int i = 0; i < buttonColors.Length; i++)
+    {
+        var index = i;
+        <button style="background-color:@buttonColors[index];" @onclick="() => SetColor(index)">Button @i</button>
+        @if ((i + 1) % 3 == 0)
+        {
+            <div></div>
+        }
+    }
+</div>
+
+@code {
+    private string [] buttonColors = new string [9] { "red", "red", "red", "red", "red", "red", "red", "red", "red" };
+
+    private void SetColor(int index)
+    {
+        if (buttonColors[index] == "red")
+        {
+            buttonColors[index] = "blue";
+        }
+        else
+        {
+            buttonColors[index] = "red";
+        }
+        StateHasChanged();
+    }
+}

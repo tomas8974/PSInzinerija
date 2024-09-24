@@ -5,3 +5,26 @@
 <h1>Welcome to itssoover Mind Games</h1>
 
 Select the only game available for now: SimonSays
+
+<div style="float: right; margin-right: 20px;">
+
+    <form method="post" action="/Login">
+        <div style="display: grid; grid-template-columns: auto 1fr; gap: 10px;">
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password"> Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+            <button type="submit" name="guest" value="1">Guest</button>
+
+        </div>
+    </form> 
+
+    <div style="float: right;">
+         <a href="/Registration">Sign up</a>
+    </div>
+
+</div>

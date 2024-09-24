@@ -1,10 +1,10 @@
-namespace PSInzinerija1.Components.Pages
+namespace PSInzinerija1.Components.Pages.SimonSays
 {
     public partial class SimonSays
     {
-        List<Button> buttons = Enumerable.Range(1, 9)
-            .Select(index => new Button(index.ToString()))
-            .ToList();
+        protected List<Button> Buttons { get; } = Enumerable.Range(1, 9)
+           .Select(index => new Button(index.ToString()))
+           .ToList();
 
         public class Button(string buttonText)
         {

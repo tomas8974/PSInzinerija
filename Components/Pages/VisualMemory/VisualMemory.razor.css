@@ -1,0 +1,21 @@
+.pressed-valid {
+    background-color: lightgreen;
+}
+
+.pressed-invalid {
+    background-color: tomato;
+}
+
+.not-pressed {
+    background-color: oldlace;
+}
+
+.not-pressed:hover {
+    border: thick solid;
+}
+
+.button {
+    border-radius: 5px;
+    transition: border-width 0.1s ease-in-out;
+    box-sizing: border-box;
+}

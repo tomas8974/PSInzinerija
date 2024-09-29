@@ -1,38 +1,41 @@
+using PSInzinerija1.Games.VisualMemory.Models;
+
 namespace PSInzinerija1.Games.VisualMemory
 {
-    public class GameManager
+    public class VisualMemoryManager
     {
         private readonly int _roundStartDelay = 1000;
         public int Score { get; private set; } = 0;
+        public int HighScore { get; private set; } = 0;
         private int _mistakeCount = 0;
         private int _correctCount = 0;
-        public Sequence Sequence { get; private set; } = new();
+        public Pattern Pattern { get; private set; } = new();
 
         public async Task StartNewGame()
         {
             Score = 0;
-            Sequence = new();
+            Pattern = new();
             ResetRound();
             await BeginRound();
         }
 
         private void DisableButtons()
         {
-            foreach (var button in Sequence)
+            foreach (var cell in Pattern)
             {
-                button.Pressed = true;
+                cell.Pressed = true;
             }
         }
 
         private void EnableButtons()
         {
-            foreach (var button in Sequence)
+            foreach (var cell in Pattern)
             {
-                button.Pressed = false;
+                cell.Pressed = false;
             }
         }
 
-        public async Task HandleInput(ButtonSquare buttonSquare)
+        public async Task HandleInput(PatternCell buttonSquare)
         {
             if (buttonSquare.Pressed)
             {
@@ -40,7 +43,7 @@ namespace PSInzinerija1.Games.VisualMemory
             }
             buttonSquare.Pressed = true;
 
-            if (buttonSquare.Value == SequenceValue.Invalid)
+            if (buttonSquare.Value == PatternValue.Invalid)
             {
                 _mistakeCount++;
             }
@@ -54,7 +57,7 @@ namespace PSInzinerija1.Games.VisualMemory
                 // game over
                 await StartNewGame();
             }
-            else if (_correctCount >= Sequence.ValidButtonAmount)
+            else if (_correctCount >= Pattern.ValidCellAmount)
             {
                 ResetRound();
                 await Advance();
@@ -62,6 +65,13 @@ namespace PSInzinerija1.Games.VisualMemory
 
         }
 
+        private void UpdateHighScore()
+        {
+            if (Score > HighScore)
+            {
+                HighScore = Score;
+            }
+        }
         private void ResetRound()
         {
             _correctCount = 0;
@@ -70,9 +80,10 @@ namespace PSInzinerija1.Games.VisualMemory
 
         private async Task Advance()
         {
-            Sequence.IncreaseDifficulty();
-            Sequence.GenerateNewSequence();
+            Pattern.IncreaseDifficulty();
+            Pattern.GenerateNewPattern();
             Score++;
+            UpdateHighScore();
             await BeginRound();
         }
 

@@ -4,7 +4,7 @@ namespace PSInzinerija1.Components.Pages.VisualMemory
 {
     public partial class VisualMemory
     {
-        GameManager Manager { get; } = new GameManager();
+        VisualMemoryManager Manager { get; } = new VisualMemoryManager();
 
         protected override async Task OnInitializedAsync()
         {

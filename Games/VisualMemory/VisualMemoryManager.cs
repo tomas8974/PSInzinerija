@@ -1,26 +1,33 @@
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using System.Text.Json;
 
 using PSInzinerija1.Games.VisualMemory.Models;
 
 namespace PSInzinerija1.Games.VisualMemory
 {
-    public class VisualMemoryManager
+    public class VisualMemoryManager : IGameManager
     {
-        private readonly int _roundStartDelay = 1500;
-        private readonly ProtectedSessionStorage _sessionStorage;
-        private readonly string _session_variable = "vm-highscore";
+        private record VisualMemoryStats(int HighScore);
 
         public int Score { get; private set; } = 0;
         public int HighScore { get; private set; } = 0;
-        private int _mistakeCount = 0;
-        private int _correctCount = 0;
-
-        public VisualMemoryManager(ProtectedSessionStorage sessionStorage)
+        public Pattern Pattern { get; private set; } = new();
+        public string GameID => "visual-memory";
+        public string SerializedStatistics
         {
-            _sessionStorage = sessionStorage;
+            get
+            {
+                var obj = new VisualMemoryStats(HighScore);
+                var json = JsonSerializer.Serialize(obj);
+
+                return json.ToString();
+            }
         }
 
-        public Pattern Pattern { get; private set; } = new();
+        public event Action? OnStatisticsChanged;
+
+        private readonly int _roundStartDelay = 1500;
+        private int _mistakeCount = 0;
+        private int _correctCount = 0;
 
         public async Task StartNewGame()
         {
@@ -28,15 +35,6 @@ namespace PSInzinerija1.Games.VisualMemory
             Pattern = new();
             ResetRound();
             await BeginRound();
-        }
-
-        public async Task AttemptToFetchHighScore()
-        {
-            var res = await _sessionStorage.GetAsync<int>(_session_variable);
-            if (res.Success && res.Value > HighScore)
-            {
-                HighScore = res.Value;
-            }
         }
 
         private void DisableButtons()
@@ -90,7 +88,7 @@ namespace PSInzinerija1.Games.VisualMemory
             if (Score > HighScore)
             {
                 HighScore = Score;
-                _sessionStorage.SetAsync(_session_variable, HighScore);
+                OnStatisticsChanged?.Invoke();
             }
         }
 
@@ -114,6 +112,21 @@ namespace PSInzinerija1.Games.VisualMemory
             DisableButtons();
             await Task.Delay(_roundStartDelay);
             EnableButtons();
+        }
+
+        public void LoadStatisticsFromJSON(string? json)
+        {
+            if (json == null)
+            {
+                return;
+            }
+
+            VisualMemoryStats? stats = JsonSerializer.Deserialize<VisualMemoryStats>(json);
+
+            if (stats?.HighScore != null && stats?.HighScore > HighScore)
+            {
+                HighScore = stats.HighScore;
+            }
         }
     }
 }

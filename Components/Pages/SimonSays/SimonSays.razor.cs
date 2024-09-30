@@ -1,5 +1,3 @@
-
-
 namespace PSInzinerija1.Components.Pages.SimonSays
 {
     public partial class SimonSays 
@@ -10,14 +8,15 @@ namespace PSInzinerija1.Components.Pages.SimonSays
 
         public class Button(string buttonText)
         {
-            public string buttonText { get; set; }
-            
+            public string buttonText { get; set; } = buttonText;
+            public bool IsClicked { get; set; } = false;
+
+
             public async Task OnClick()
             {
-                
-                await Task.Delay(50);
-                
-                
+                IsClicked = true;
+                await Task.Delay(100);
+                IsClicked = false;
             }
         }
     }

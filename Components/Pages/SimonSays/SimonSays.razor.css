@@ -11,8 +11,11 @@
     color: black;
     border-radius: 15px;
     box-shadow: 0 9px #999;
-    transition: border-width 0.1s, ease-in-out
+    transition: border-width 0.1s ease-in-out;
+    box-sizing: border-box;
 }
+
+
 
 .buttonDefault.pressed.valid{
     border-width: 5px;

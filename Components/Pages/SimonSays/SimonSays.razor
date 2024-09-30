@@ -7,6 +7,6 @@
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 300px; margin: 0 auto">
     @foreach (var button in Buttons)
     {
-        <button style="background-color:@button.Color;" @onclick="button.OnClick">@button.Text</button>
+        <button class="buttonDefault" @onclick="button.OnClick">@button.buttonText</button>
     }
 </div>

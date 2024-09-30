@@ -1,4 +1,4 @@
-.button{
+.buttonDefault{
     background-color: white;
     padding: 15px 32px;
     border: 2px solid #000000;
@@ -14,17 +14,13 @@
     transition: border-width 0.1s, ease-in-out
 }
 
-.pressedValid{
-    background-color: #4CAF50;
-    
+.buttonDefault.pressed.valid{
+    border-width: 5px;
+    background-color: green;
 }
 
-.pressedInvalid{
-    background-color: #f44336;
-    
+.buttonDefault.pressed.invalid{
+    border-width: 5px;
+    background-color: red;
 }
 
-.notPressed{
-    background-color: #FFFFFF
-    
-}

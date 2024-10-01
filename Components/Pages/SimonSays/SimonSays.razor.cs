@@ -1,6 +1,6 @@
 namespace PSInzinerija1.Components.Pages.SimonSays
 {
-    public partial class SimonSays
+    public partial class SimonSays 
     {
         protected List<Button> Buttons { get; } = Enumerable.Range(1, 9)
            .Select(index => new Button(index.ToString()))
@@ -8,14 +8,15 @@ namespace PSInzinerija1.Components.Pages.SimonSays
 
         public class Button(string buttonText)
         {
-            public string Color { get; set; } = "white";
-            public string Text { get; set; } = buttonText;
+            public string buttonText { get; set; } = buttonText;
+            public bool IsClicked { get; set; } = false;
+
 
             public async Task OnClick()
             {
-                Color = "blue";
+                IsClicked = true;
                 await Task.Delay(100);
-                Color = "white";
+                IsClicked = false;
             }
         }
     }

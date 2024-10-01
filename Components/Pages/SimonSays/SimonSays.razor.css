@@ -1,6 +1,6 @@
 .buttonDefault{
     background-color: white;
-    padding: 15px 32px;
+    padding: 32px 32px;
     border: 2px solid #000000;
     display: inline-block;
     font-size: 16px;
@@ -10,8 +10,8 @@
     outline: none;
     color: black;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
-    transition: border-width 0.1s ease-in-out;
+    box-shadow: 0 7px  7px #999;
+    transition: border-width 0.1s ease-in-out box-shadow 0.1s ease-in-out;
     box-sizing: border-box;
 }
 
@@ -20,6 +20,7 @@
 .buttonDefault.pressed.valid{
     border-width: 5px;
     background-color: green;
+    box-shadow: 0 2px 2px #3f3f3f;
 }
 
 .buttonDefault.pressed.invalid{

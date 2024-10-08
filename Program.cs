@@ -24,6 +24,7 @@ builder.Services.AddHttpClient<HighScoreAPIService>(options =>
 {
     options.BaseAddress = new Uri("http://localhost:5181");
 }).AddHeaderPropagation();
+
 builder.Services.AddHeaderPropagation(options =>
 {
     options.Headers.Add("Cookie");

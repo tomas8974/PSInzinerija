@@ -6,16 +6,25 @@
 <h4>Please fill in the boxes below.</h4>
 <div style="color: red;">Boxes marked with * are mandatory.</div><br>
 
-<form method="post" action="/register">
-    <div style="display: grid; grid-template-columns: auto 1fr; gap: 10px; width: 100px;">
+<form id="registration-form" >
+        <div style="display: grid; grid-template-columns: auto 1fr; gap: 10px; width: 100px;">
 
             <label for="email">*Email:</label>
-            <input type="text" id="email" name="email" required>
+            <input type="text" id="email" name="email" required />
 
             <label for="password">*Password:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="text" id="password" name="password" required />
 
-            <a></a>
-            <button type="submit" style="justify-self: end;">Sign up</button>
-    </div>
-</form>
+            <button type="submit" style="justify-self: end;">Register</button>
+        </div>
+    </form>
+
+@code {
+    [Inject]
+    protected IJSRuntime JSRuntime { get; set; }
+
+    protected override void OnAfterRender(bool firstRender) {
+        if(firstRender)
+            JSRuntime.InvokeVoidAsync("onBlazorReadyReg");
+    }
+}

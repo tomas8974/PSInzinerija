@@ -2,20 +2,30 @@
 
 @using PSInzinerija1.Games.SimonSays
 
-<PageTitle>SimonSays</PageTitle>
+<PageTitle>@gameInfo?.gameName</PageTitle>
 
-<h1>SimonSays</h1>
+    
 
-<div style="text-align: left;">
     <h2>High Score: @gameManager.HighScore</h2>
-    <h2>Score: @gameManager.Level</h2>
-</div>
+    <h2>Current Score: @gameManager.Level</h2>
 
-
-<div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 10px; width: 50vh; margin: 0 auto; height: 50vh; position: relative;">
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 10px; width: 48vh; margin: 0 auto; height: 48vh; position: relative;">
     @foreach (var button in gameManager.Buttons)
     {
         var buttonClass = button.IsLit ? "buttonDefault pressed valid" : "buttonDefault";
         <button class="@buttonClass" @onclick="async () => await button.OnClick(StateHasChanged)">@button.Text</button>
     }
 </div>
+    <div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 3em;">
+        <button   class="buttonDefault start" disabled = "@gameManager.IsDisabled" @onclick="@(async () => {@gameManager.IsDisabled=true; await gameManager.StartNewGame();})">New Game</button>
+        
+    </div>
+
+@if(@gameInfo == null)
+{}
+else{
+<h2>@gameInfo.Value.gameName Žaidimo taisyklės</h2>
+<p>@gameInfo.Value.rules</p>
+<h2>Žaidimo išleidimo data: @gameInfo.Value.releaseDate </h2>
+}
+

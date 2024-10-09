@@ -19,7 +19,7 @@
 
 .buttonDefault.pressed.valid{
     border-width: 5px;
-    background-color: green;
+    background-color: cyan;
     box-shadow: 0 2px 2px #3f3f3f;
 }
 
@@ -27,4 +27,27 @@
     border-width: 5px;
     background-color: red;
 }
+
+.buttonDefault.start{
+    background-color: white;
+    height: 100px;
+    border: 2px solid #000000;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    border-radius: 15px;
+    box-shadow: 0 7px  7px #999;
+    transition: border-width 0.1s ease-in-out box-shadow 0.1s ease-in-out;
+    box-sizing: border-box;
+    aspect-ratio: 1/1;
+    vertical-align: middle;
+    margin: 0 auto;
+    width: 200px;
+}
+
+
 

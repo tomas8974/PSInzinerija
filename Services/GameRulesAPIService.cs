@@ -1,38 +1,35 @@
 using System.Text;
 using PSInzinerija1.Enums;
-
+using PSInzinerija1.Games.SimonSays;
 
 namespace PSInzinerija1.Services
 {
     public class GameRulesAPIService(HttpClient httpClient)
     {
         
-        public async Task<GameInformation> GetGameRulesAsync()
+        public async Task<GameInfo> GetGameRulesAsync()
         {
-            GameInformation gameInfo = new GameInformation
+            GameInfo gameInfo = new GameInfo
             {
                 rules = "",
                 gameName = "Simon Says",
                 releaseDate = new DateTime(2024, 9, 27)
             };
 
-            string requestUri = "api/gamerules/stream";
-            var res = await httpClient.GetAsync(requestUri);
-            
-            if (res.IsSuccessStatusCode)
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/GameRules/SimonSaysRules.txt");
+
+            if (!System.IO.File.Exists(filePath))
             {
-                    using(var stream = await res.Content.ReadAsStreamAsync())
-                    using (var reader = new StreamReader(stream))
-                    {
-                        gameInfo.rules = await reader.ReadToEndAsync();
-                    }
-                return gameInfo;
+                return gameInfo; //grazina tuscias taisykles
             }
-            else
+
+            using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (var reader = new StreamReader(stream))
             {
-                gameInfo.rules = "Failed to load game rules.";
-                return gameInfo;
+                gameInfo.rules = await reader.ReadToEndAsync();
             }
+
+            return gameInfo; //grazina perskaicius
         }
     }
 }

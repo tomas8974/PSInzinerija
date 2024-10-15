@@ -1,22 +1,32 @@
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;
+using PSInzinerija1.Services;
+using PSInzinerija1.Games.SimonSays;
 
-[ApiController]
-[Route("api/[controller]")]
-public class GameRulesController : ControllerBase
+
+namespace PSInzinerija1.Controllers
 {
-    [HttpGet("stream")]
-    public IActionResult GetGameRulesAsStream()
+    [ApiController]
+    [Route("api/[controller]")]
+    public class GameRulesController : ControllerBase
     {
-        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/GameRules/SimonSaysRules.txt");
+        
+        private readonly GameRulesAPIService _gameRulesService;
 
-        if (!System.IO.File.Exists(filePath))
+        public GameRulesController(GameRulesAPIService gameRulesService)
         {
-            return NotFound("Game rules file not found.");
+            _gameRulesService = gameRulesService;
         }
 
-        var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-        return File(stream, "text/plain");
+        [HttpGet]
+        public async Task<ActionResult<GameInfo>> GetRulesAsync()
+        {
+            // is yra pattern matching, kuris patikrina ar rules yra ne tuscias
+            //grazina 404 jei taisykles nerandamos
+            return await _gameRulesService.GetGameRulesAsync() is { rules: { Length: > 0 } } gameInfo 
+                ? Ok(gameInfo)
+                : NotFound("Game rules not found."); 
+        }
     }
 }

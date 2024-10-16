@@ -4,6 +4,7 @@ namespace PSInzinerija1.Games
 {
     public interface IGameManager
     {
+        public int HighScore { get; }
         public AvailableGames GameID { get; }
         public string SerializedStatistics { get; }
 

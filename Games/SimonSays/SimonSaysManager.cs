@@ -1,8 +1,12 @@
+using System.Text.Json;
+using System.Text.Json.Nodes;
+
+using PSInzinerija1.Enums;
 using PSInzinerija1.Games.SimonSays.Models;
 
 namespace PSInzinerija1.Games.SimonSays
 {
-    public class SimonSaysManager
+    public class SimonSaysManager : IGameManager
     {
         public List<int> Sequence { get; private set; } = new List<int>();
         public int Level { get; private set; } = 0;
@@ -12,19 +16,36 @@ namespace PSInzinerija1.Games.SimonSays
         public List<Button> Buttons { get; private set; }
         public bool IsShowingSequence { get; set; } = false;
         private readonly Random rand = new Random();
+
+        public event Action OnStatisticsChanged;
+
         public Action? OnStateChanged { get; set; }
-        public bool IsDisabled {get; set;} = false;
-        
-        
-        
+        public bool IsDisabled { get; set; } = false;
+
+        public AvailableGames GameID => AvailableGames.SimonSays;
+
+        public string SerializedStatistics
+        {
+            get
+            {
+                var obj = new
+                {
+                    HighScore
+                };
+                var json = JsonSerializer.Serialize(obj);
+
+                return json.ToString();
+            }
+        }
+
         public SimonSaysManager()
         {
             Buttons = Enumerable.Range(1, 9)
                 .Select(index => new Button("", index, this))
                 .ToList();
-            
+
         }
-        
+
 
         public async Task StartNewGame()
         {
@@ -45,12 +66,12 @@ namespace PSInzinerija1.Games.SimonSays
         {
             IsShowingSequence = true;
 
-           foreach (int index in Sequence)
-           {
+            foreach (int index in Sequence)
+            {
                 var button = Buttons[index - 1];
                 int levelBasedDelay = Math.Max(200 - (Level * 10), 50);
                 int levelBasedFlash = Math.Max(400 - (Level * 20), 100);
-                await button.FlashButton(OnStateChanged, delayBeforeFlash: levelBasedDelay, duration:levelBasedFlash);
+                await button.FlashButton(OnStateChanged, delayBeforeFlash: levelBasedDelay, duration: levelBasedFlash);
             }
             IsShowingSequence = false;
         }
@@ -67,6 +88,7 @@ namespace PSInzinerija1.Games.SimonSays
                 if (Level > HighScore)
                 {
                     HighScore = Level;
+                    OnStatisticsChanged?.Invoke();
                 }
                 GameOver = true;
                 Level = 0;
@@ -92,5 +114,33 @@ namespace PSInzinerija1.Games.SimonSays
             if (currentInputIndex >= Sequence.Count) return false;
             return PlayerInput[currentInputIndex] == Sequence[currentInputIndex];
         }
+
+        public void LoadStatisticsFromJSON(string? json)
+        {
+            if (json == null)
+            {
+                return;
+            }
+
+            var jsonObject = JsonNode.Parse(json)?.AsObject();
+
+            if (jsonObject != null && jsonObject[nameof(HighScore)] != null)
+            {
+                HighScore = jsonObject[nameof(HighScore)].Deserialize<int>();
+            }
+
+        }
+
+        public bool SetHighScore(int? highScore)
+        {
+            if (highScore == null || highScore.Value < HighScore)
+            {
+                return false;
+            }
+
+            HighScore = highScore.Value;
+            return true;
+        }
     }
 }
+

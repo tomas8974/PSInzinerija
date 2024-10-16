@@ -1,8 +1,12 @@
+using System.Text.Json;
+using System.Text.Json.Nodes;
+
+using PSInzinerija1.Enums;
 using PSInzinerija1.Games.SimonSays.Models;
 
 namespace PSInzinerija1.Games.SimonSays
 {
-    public class SimonSaysManager
+    public class SimonSaysManager : IGameManager
     {
         public List<int> Sequence { get; private set; } = new List<int>();
         public int Level { get; private set; } = 0;
@@ -12,8 +16,27 @@ namespace PSInzinerija1.Games.SimonSays
         public List<Button> Buttons { get; private set; }
         public bool IsShowingSequence { get; set; } = false;
         private readonly Random rand = new Random();
+
+        public event Action OnStatisticsChanged;
+
         public Action? OnStateChanged { get; set; }
         public bool IsDisabled { get; set; } = false;
+
+        public AvailableGames GameID => AvailableGames.SimonSays;
+
+        public string SerializedStatistics
+        {
+            get
+            {
+                var obj = new
+                {
+                    HighScore
+                };
+                var json = JsonSerializer.Serialize(obj);
+
+                return json.ToString();
+            }
+        }
 
         public SimonSaysManager()
         {
@@ -63,6 +86,7 @@ namespace PSInzinerija1.Games.SimonSays
                 if (Level > HighScore)
                 {
                     HighScore = Level;
+                    OnStatisticsChanged?.Invoke();
                 }
                 GameOver = true;
                 Level = 0;
@@ -83,6 +107,33 @@ namespace PSInzinerija1.Games.SimonSays
         {
             int currentInputIndex = PlayerInput.Count - 1;
             return PlayerInput[currentInputIndex] == Sequence[currentInputIndex];
+        }
+
+        public void LoadStatisticsFromJSON(string? json)
+        {
+            if (json == null)
+            {
+                return;
+            }
+
+            var jsonObject = JsonNode.Parse(json)?.AsObject();
+
+            if (jsonObject != null && jsonObject[nameof(HighScore)] != null)
+            {
+                HighScore = jsonObject[nameof(HighScore)].Deserialize<int>();
+            }
+
+        }
+
+        public bool SetHighScore(int? highScore)
+        {
+            if (highScore == null || highScore.Value < HighScore)
+            {
+                return false;
+            }
+
+            HighScore = highScore.Value;
+            return true;
         }
     }
 }

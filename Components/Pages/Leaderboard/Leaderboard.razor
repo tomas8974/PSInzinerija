@@ -1,11 +1,18 @@
 @page "/Leaderboard"
+@using PSInzinerija1.Enums
 @using PSInzinerija1.Services
 @using PSInzinerija1.Data.Models
 
 <PageTitle>Leaderboard</PageTitle>
 
 <h1>Leaderboard</h1>
-Only showing records for VisualMemory
+
+<InputSelect @bind-Value="@SelectedGame" @bind-Value:after="UpdateLeaderboard" >
+    @foreach (var game in Enum.GetValues(typeof(AvailableGames))) {
+        <option value="@game">@game</option>
+    }
+</InputSelect>
+
 @if (list.Count != 0) {
     <table class="table table-hover table-striped">
         <thead class="thead-light">
@@ -36,7 +43,14 @@ else
     [Inject]
     HighScoreAPIService HighScoreAPI { get; set; }
     List<LeaderboardEntry> list { get; set; } = new();
+
+    AvailableGames SelectedGame { get; set; } = AvailableGames.VisualMemory;
+
     protected override async Task OnInitializedAsync() {
-        list = await HighScoreAPI.GetLeaderboardEntriesAsync(Enums.AvailableGames.VisualMemory);
+        await UpdateLeaderboard();
+    }
+
+    protected async Task UpdateLeaderboard() {
+        list = await HighScoreAPI.GetLeaderboardEntriesAsync(SelectedGame);
     }
 }    

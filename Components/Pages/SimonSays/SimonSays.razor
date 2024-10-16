@@ -2,7 +2,7 @@
 
 @using PSInzinerija1.Games.SimonSays
 
-<PageTitle>@gameInfo?.gameName</PageTitle>
+<PageTitle>@gameInfo?.GameName</PageTitle>
 
     
 
@@ -24,8 +24,8 @@
 @if(@gameInfo == null)
 {}
 else{
-<h2>@gameInfo.Value.gameName Žaidimo taisyklės</h2>
-<p>@gameInfo.Value.rules</p>
-<h2>Žaidimo išleidimo data: @gameInfo.Value.releaseDate </h2>
+<h2>@gameInfo.Value.GameName Žaidimo taisyklės</h2>
+<p>@gameInfo.Value.Rules</p>
+<h2>Žaidimo išleidimo data: @gameInfo.Value.ReleaseDate </h2>
 }
 

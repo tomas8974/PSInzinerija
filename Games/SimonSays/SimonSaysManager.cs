@@ -43,9 +43,7 @@ namespace PSInzinerija1.Games.SimonSays
             Buttons = Enumerable.Range(1, 9)
                 .Select(index => new Button("", index, this))
                 .ToList();
-
         }
-
 
         public async Task StartNewGame()
         {
@@ -80,7 +78,7 @@ namespace PSInzinerija1.Games.SimonSays
         {
             if (GameOver) return;
 
-            int playerInputTile = tileIndex + 1; // +1, because 0-based indexing
+            int playerInputTile = tileIndex + 1;
             PlayerInput.Add(playerInputTile);
 
             if (!IsInputCorrect())
@@ -93,9 +91,6 @@ namespace PSInzinerija1.Games.SimonSays
                 GameOver = true;
                 Level = 0;
                 IsDisabled = false;
-                // await Task.Delay(1000);
-
-                // await StartNewGame();
                 return;
             }
 
@@ -111,7 +106,6 @@ namespace PSInzinerija1.Games.SimonSays
         private bool IsInputCorrect()
         {
             int currentInputIndex = PlayerInput.Count - 1;
-            if (currentInputIndex >= Sequence.Count) return false;
             return PlayerInput[currentInputIndex] == Sequence[currentInputIndex];
         }
 
@@ -143,4 +137,3 @@ namespace PSInzinerija1.Games.SimonSays
         }
     }
 }
-

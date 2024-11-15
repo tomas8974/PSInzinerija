@@ -1,0 +1,29 @@
+@page "/Registration"
+
+<PageTitle>Registration</PageTitle>
+
+<h1>Registration</h1><br>
+<h4>Please fill in the fields below.</h4>
+<div style="color: red;">Fields marked with * are mandatory.</div><br>
+
+<AuthorizeView>
+    <NotAuthorized>
+        <RegistrationForm />
+    </NotAuthorized>
+    <Authorized>
+        <h1>
+            You are already logged in!
+        </h1>
+    </Authorized>
+</AuthorizeView>
+
+
+@code {
+    [Inject]
+    protected IJSRuntime JSRuntime { get; set; }
+
+    protected override void OnAfterRender(bool firstRender) {
+        if(firstRender)
+            JSRuntime.InvokeVoidAsync("onBlazorReadyReg");
+    }
+}

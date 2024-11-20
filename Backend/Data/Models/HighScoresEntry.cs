@@ -2,7 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 
-using PSInzinerija1.Enums;
+using Shared.Enums;
 
 namespace Backend.Data.Models
 {
@@ -11,7 +11,7 @@ namespace Backend.Data.Models
     public class HighScoresEntry
     {
         [Column("user_id")]
-        public required string Id { get; set; } = default!;
+        public required string Id { get; set; }
         [Column("high_score")]
         public required int HighScore { get; set; }
         [Column("game_id")]

@@ -1,9 +1,15 @@
-using System.Text.Json;
+using System;
+using System.Collections.Generic;
 using System.Text.Json.Nodes;
+using System.Text.Json;
+using System.Diagnostics;
+
 
 using Frontend.Games.SimonSays.Models;
+using Shared.Enums;
+using Microsoft.VisualBasic;
 
-using PSInzinerija1.Enums;
+
 
 namespace Frontend.Games.SimonSays
 {
@@ -19,12 +25,18 @@ namespace Frontend.Games.SimonSays
         private readonly Random rand = new Random();
 
         public event Action? OnStatisticsChanged;
+        public event Action? OnScoreChanged;
 
         public Action? OnStateChanged { get; set; }
         public bool IsDisabled { get; set; } = false;
 
         public AvailableGames GameID => AvailableGames.SimonSays;
 
+        public int RecentScore { get; set; } = 0;
+        public TimeSpan TimePlayed;
+        public Stopwatch Timer = new Stopwatch();
+        
+        
         public string SerializedStatistics
         {
             get
@@ -52,6 +64,7 @@ namespace Frontend.Games.SimonSays
             Sequence.Clear();
             PlayerInput.Clear();
             GameOver = false;
+            Timer.Start();
             await GenerateSequence();
         }
 
@@ -63,6 +76,7 @@ namespace Frontend.Games.SimonSays
 
         private async Task ShowSequence()
         {
+            
             IsShowingSequence = true;
 
             foreach (int index in Sequence)
@@ -73,6 +87,7 @@ namespace Frontend.Games.SimonSays
                 await button.FlashButton(OnStateChanged, delayBeforeFlash: levelBasedDelay, duration: levelBasedFlash);
             }
             IsShowingSequence = false;
+            
         }
 
         public async Task HandleTileClick(int tileIndex)
@@ -84,11 +99,18 @@ namespace Frontend.Games.SimonSays
 
             if (!IsInputCorrect())
             {
+                
+                Timer.Stop();
+                TimePlayed = Timer.Elapsed;
+                RecentScore = Level;
+                OnScoreChanged?.Invoke();
                 if (Level > HighScore)
                 {
                     HighScore = Level;
                     OnStatisticsChanged?.Invoke();
                 }
+                
+                
                 GameOver = true;
                 Level = 0;
                 IsDisabled = false;
@@ -97,7 +119,9 @@ namespace Frontend.Games.SimonSays
 
             if (PlayerInput.Count == Sequence.Count)
             {
+                
                 Level++;
+                RecentScore = Level;
                 await Task.Delay(200);
                 PlayerInput.Clear();
                 await GenerateSequence();

@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
-using PSInzinerija1.Enums;
+using Shared.Enums;
 using Frontend.Services;
 using Frontend.Games.VisualMemory;
 using Frontend.Games;
 using Frontend.Extensions;
+using PSInzinerija1.Shared.Data.Models;
+using PSInzinerija1.Shared.Data.Models.Stats;
 
 namespace Frontend.Components.Pages.VisualMemory
 {
@@ -16,6 +18,8 @@ namespace Frontend.Components.Pages.VisualMemory
         HighScoreAPIService HighScoreAPIService { get; set; }
         [Inject]
         ProtectedSessionStorage SessionStorage { get; set; }
+        [Inject]
+        StatsAPIService<VisualMemoryStats> StatsAPIService { get; set; }
         [Inject]
         ILogger<VisualMemory> Logger { get; set; }
         VisualMemoryManager Manager { get; set; }
@@ -29,6 +33,11 @@ namespace Frontend.Components.Pages.VisualMemory
                 await SaveToDB(Manager);
                 await SessionStorage.SaveStateSessionStorage(Manager);
             };
+            Manager.OnScoreChanged += async () =>
+            {
+                await SaveStatsToDB(Manager);
+                StateHasChanged();
+            };
 
             await Manager.StartNewGame();
         }
@@ -38,7 +47,9 @@ namespace Frontend.Components.Pages.VisualMemory
             if (firstRender)
             {
                 await FetchDataAsync();
+                await FetchStatsAsync();
             }
+            
         }
 
         // TODO: iskelti kitur
@@ -69,6 +80,28 @@ namespace Frontend.Components.Pages.VisualMemory
             {
                 await SessionStorage.LoadFromSessionStorage(Manager);
                 Logger.LogInformation("Loaded from session storage.");
+            }
+            StateHasChanged();
+        }
+
+        private async Task SaveStatsToDB(VisualMemoryManager gameManager)
+        {
+            var stats = new VisualMemoryStats
+            {
+                RecentScore = gameManager.RecentScore,
+                GameMistakes = gameManager.GameMistakes
+            };
+            await StatsAPIService.SaveStatsAsync(gameManager.GameID, stats);
+        }
+
+        private async Task FetchStatsAsync()
+        {
+            var stats = await StatsAPIService.GetStatsAsync(AvailableGames.VisualMemory);
+            if (stats != null)
+            {
+                Manager.RecentScore = stats.RecentScore;
+                Manager.GameMistakes = stats.GameMistakes;
+                Logger.LogInformation("Loaded from database.");
             }
             StateHasChanged();
         }

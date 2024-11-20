@@ -3,9 +3,6 @@ using System.Text.Json;
 using Frontend.Games.VisualMemory.Models;
 
 using Shared.Enums;
-using PSInzinerija1.Shared.Data.Models;
-using PSInzinerija1.Shared.Data.Models.Stats;
-using System.ComponentModel.DataAnnotations;
 
 namespace Frontend.Games.VisualMemory
 {
@@ -14,7 +11,7 @@ namespace Frontend.Games.VisualMemory
         public record VisualMemoryHighScore(int HighScore);
         public int Score { get; private set; } = 0;
         public int GameMistakes { get; set; } = 0;
-        public int RecentScore {get; set;} = 0;
+        public int RecentScore { get; set; } = 0;
         public int HighScore { get; private set; } = 0;
         public Pattern Pattern { get; private set; } = new();
         public AvailableGames GameID => AvailableGames.VisualMemory;
@@ -35,7 +32,7 @@ namespace Frontend.Games.VisualMemory
         private readonly int _roundStartDelay = 1500;
         private int _mistakeCount = 0;
         private int _correctCount = 0;
-        
+
 
         public async Task StartNewGame()
         {
@@ -98,14 +95,14 @@ namespace Frontend.Games.VisualMemory
 
         private void UpdateHighScore()
         {
-            
+
             if (Score > HighScore)
             {
                 HighScore = Score;
                 OnStatisticsChanged?.Invoke();
             }
         }
-        
+
 
         private void ResetRound()
         {

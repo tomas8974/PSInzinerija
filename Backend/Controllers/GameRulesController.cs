@@ -2,7 +2,7 @@ using Backend.Services;
 
 using Microsoft.AspNetCore.Mvc;
 
-using PSInzinerija1.Shared.Data.Models;
+using Shared.Data.Models;
 
 
 namespace Backend.Controllers

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 using System.Diagnostics;
@@ -7,9 +5,6 @@ using System.Diagnostics;
 
 using Frontend.Games.SimonSays.Models;
 using Shared.Enums;
-using Microsoft.VisualBasic;
-
-
 
 namespace Frontend.Games.SimonSays
 {
@@ -35,8 +30,8 @@ namespace Frontend.Games.SimonSays
         public int RecentScore { get; set; } = 0;
         public TimeSpan TimePlayed;
         public Stopwatch Timer = new Stopwatch();
-        
-        
+
+
         public string SerializedStatistics
         {
             get
@@ -76,7 +71,7 @@ namespace Frontend.Games.SimonSays
 
         private async Task ShowSequence()
         {
-            
+
             IsShowingSequence = true;
 
             foreach (int index in Sequence)
@@ -87,7 +82,7 @@ namespace Frontend.Games.SimonSays
                 await button.FlashButton(OnStateChanged, delayBeforeFlash: levelBasedDelay, duration: levelBasedFlash);
             }
             IsShowingSequence = false;
-            
+
         }
 
         public async Task HandleTileClick(int tileIndex)
@@ -99,7 +94,7 @@ namespace Frontend.Games.SimonSays
 
             if (!IsInputCorrect())
             {
-                
+
                 Timer.Stop();
                 TimePlayed = Timer.Elapsed;
                 RecentScore = Level;
@@ -109,8 +104,8 @@ namespace Frontend.Games.SimonSays
                     HighScore = Level;
                     OnStatisticsChanged?.Invoke();
                 }
-                
-                
+
+
                 GameOver = true;
                 Level = 0;
                 IsDisabled = false;
@@ -119,7 +114,7 @@ namespace Frontend.Games.SimonSays
 
             if (PlayerInput.Count == Sequence.Count)
             {
-                
+
                 Level++;
                 RecentScore = Level;
                 await Task.Delay(200);

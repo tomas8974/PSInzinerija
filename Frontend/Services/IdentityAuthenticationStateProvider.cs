@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 using PSInzinerija1.Shared.Data.Models;
 
+using Shared.Data.Models;
+
 namespace Frontend.Services
 {
     public class IdentityAuthenticationStateProvider : AuthenticationStateProvider

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using Shared.Enums;
-using PSInzinerija1.Shared.Data.Models;
+using Shared.Data.Models;
 
 namespace Backend.Services
 {

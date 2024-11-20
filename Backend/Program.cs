@@ -6,12 +6,12 @@ using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
-using PSInzinerija1.Shared.Data.Models;
 using Backend.Filters;
 using Backend.Data.ApplicationDbContext;
 using Backend.Data.Models;
 using Backend.Services;
 using PSInzinerija1.Shared.Data.Models.Stats;
+using Shared.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -88,7 +88,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     options.SlidingExpiration = true;
 });
 

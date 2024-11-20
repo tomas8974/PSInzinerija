@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Enums;
-using PSInzinerija1.Shared.Data.Models;
 using Backend.Filters;
 using Backend.Data.Models;
 using Backend.Services;
+using Shared.Data.Models;
 
 namespace Backend.Controllers
 {

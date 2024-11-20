@@ -5,10 +5,8 @@ using Frontend.Services;
 using Frontend.Games.SimonSays;
 using Frontend.Games;
 using Frontend.Extensions;
-using System.Runtime.CompilerServices;
-using PSInzinerija1.Shared.Data.Models;
 using PSInzinerija1.Shared.Data.Models.Stats;
-using System.Runtime.InteropServices;
+using Shared.Data.Models;
 
 namespace Frontend.Components.Pages.SimonSays
 {
@@ -72,7 +70,7 @@ namespace Frontend.Components.Pages.SimonSays
         private async Task SaveToDB(IGameManager iGameManager)
         {
             var highScore = gameManager.HighScore;
-            var res = await HighScoreAPIService.SaveHighScoreToDbAsync(iGameManager.GameID, highScore); 
+            var res = await HighScoreAPIService.SaveHighScoreToDbAsync(iGameManager.GameID, highScore);
             Logger.LogInformation(res ? "Saved to database." : "Failed to save to database.");
         }
 

@@ -7,50 +7,58 @@
 
 <h1>Leaderboard</h1>
 
-<InputSelect @bind-Value="@SelectedGame" @bind-Value:after="UpdateLeaderboard" >
-    @foreach (var game in Enum.GetValues(typeof(AvailableGames))) {
-        <option value="@game">@game</option>
+<div class="leaderboard-grid">
+    @foreach (var game in Enum.GetValues(typeof(AvailableGames)).Cast<AvailableGames>()) {
+        <div class="leaderboard-item">
+            <h2>@game Leaderboard</h2>
+            @if (leaderboards.ContainsKey(game) && leaderboards[game].Count != 0) {
+                <table class="table table-hover table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">High score</th>
+                            <th scope="col">Date (UTC)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var entry in leaderboards[game]) {
+                        <tr>
+                            <td>@entry.UserName</td>
+                            <td>@entry.HighScore</td>
+                            <td>@entry.RecordDate</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else {
+                <b>Leaderboard is empty</b>
+            }
+        </div>
     }
-</InputSelect>
-
-@if (list.Count != 0) {
-    <table class="table table-hover table-striped">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Username</th>
-                <th scope="col">High score</th>
-                <th scope="col">Date (UTC)</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var entry in list) {
-            <tr>
-                <td>@entry.UserName</td>
-                <td>@entry.HighScore</td>
-                <td>@entry.RecordDate</td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
-else
-{
-    <b>Leaderboard is empty</b>
-}
-
+</div>
 
 @code {
     [Inject]
     HighScoreAPIService HighScoreAPI { get; set; }
-    List<LeaderboardEntry> list { get; set; } = new();
-
-    AvailableGames SelectedGame { get; set; } = AvailableGames.VisualMemory;
+    Dictionary<AvailableGames, List<LeaderboardEntry>> leaderboards { get; set; } = new();
 
     protected override async Task OnInitializedAsync() {
-        await UpdateLeaderboard();
+        foreach (var game in Enum.GetValues(typeof(AvailableGames)).Cast<AvailableGames>()) {
+            leaderboards[game] = await HighScoreAPI.GetLeaderboardEntriesAsync(game);
+        }
     }
+}
 
-    protected async Task UpdateLeaderboard() {
-        list = await HighScoreAPI.GetLeaderboardEntriesAsync(SelectedGame);
+<style>
+    .leaderboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
     }
-}    
+    .leaderboard-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+    }
+</style>

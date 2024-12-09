@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Frontend.Services;
 using PSInzinerija1.Shared.Data.Models.Stats;
 using Shared.Enums;
+using System.Net.Http;
 
 namespace Frontend.Tests
 {
@@ -50,6 +51,38 @@ namespace Frontend.Tests
             var result = await _service.GetStatsAsync(game);
 
             Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData(AvailableGames.VerbalMemory)]
+        [InlineData(AvailableGames.VisualMemory)]
+        [InlineData(AvailableGames.SimonSays)]
+        public async Task SaveStatsAsync_SavesSuccessfully_WhenGameIsAvailable(AvailableGames game)
+        {
+            var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+            mockHttpMessageHandler
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK
+                });
+
+            var mockHttpClient = new HttpClient(mockHttpMessageHandler.Object);
+            var logger = new Mock<ILogger<StatsAPIService<VisualMemoryStats>>>();
+            var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+            mockHttpClientFactory.Setup(f => f.CreateClient(It.IsAny<string>())).Returns(mockHttpClient);
+
+            var service = new StatsAPIService<VisualMemoryStats>(mockHttpClientFactory.Object, logger.Object);
+
+            try
+            {
+                await _service.SaveStatsAsync(game, new VisualMemoryStats());
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("Expected no exception, but got: " + ex.Message);
+            }
         }
     }
 }

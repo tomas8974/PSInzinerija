@@ -14,7 +14,6 @@ using PSInzinerija1.Shared.Data.Models.Stats;
 using Shared.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 var configuration = builder.Configuration;
 
 builder.Logging.ClearProviders();
@@ -25,7 +24,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5142")
+        policy.WithOrigins("http://frontend:5001/")
             .AllowCredentials()
             .AllowAnyMethod()
             .AllowAnyHeader();
@@ -103,8 +102,13 @@ if (!app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+}
+app.UseSwagger();
+app.UseSwaggerUI();
+using (var scope = app.Services.CreateScope())
+{
+    var dbcontext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbcontext.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
@@ -123,7 +127,7 @@ app.MapModifiedIdentityApi<User>();
 app.MapControllers();
 
 // temp
-app.MapPost("/logout", async (SignInManager<User> signInManager) =>
+app.MapPost("/api/logout", async (SignInManager<User> signInManager) =>
 {
     await signInManager.SignOutAsync();
     return TypedResults.Ok();
@@ -131,7 +135,7 @@ app.MapPost("/logout", async (SignInManager<User> signInManager) =>
 .RequireAuthorization();
 
 // temp
-app.MapGet("/user/info", async Task<Results<Ok<UserInfo>, ValidationProblem, NotFound>>
+app.MapGet("/api/user/info", async Task<Results<Ok<UserInfo>, ValidationProblem, NotFound>>
     (ClaimsPrincipal claimsPrincipal, [FromServices] IServiceProvider sp) =>
 {
     var userManager = sp.GetRequiredService<UserManager<User>>();

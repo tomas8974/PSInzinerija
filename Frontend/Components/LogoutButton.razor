@@ -11,7 +11,7 @@
         var client = ClientFactory.CreateClient("BackendApi");
         try
         {
-            var response = await client.PostAsync("/logout", null);
+            var response = await client.PostAsync("api/logout", null);
             if (response.IsSuccessStatusCode)
             {
                 NavigationManager.NavigateTo("/", true);

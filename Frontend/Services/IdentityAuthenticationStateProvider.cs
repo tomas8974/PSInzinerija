@@ -25,7 +25,7 @@ namespace Frontend.Services
             UserInfo? userInfo = null;
             try
             {
-                userInfo = await _httpClient.GetFromJsonAsync<UserInfo>("user/info");
+                userInfo = await _httpClient.GetFromJsonAsync<UserInfo>("api/user/info");
             }
             catch (Exception e)
             {

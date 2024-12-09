@@ -11,7 +11,7 @@ builder.Logging.AddConsole();
 
 builder.Services.AddHttpClient("BackendApi", options =>
 {
-    options.BaseAddress = new Uri("http://localhost:5211");
+    options.BaseAddress = new Uri("http://backend:5000/");
     options.DefaultRequestHeaders.Add("Access-Control-Allow-Credentials", "true");
 }).AddHeaderPropagation();
 

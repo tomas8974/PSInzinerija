@@ -4,6 +4,7 @@
     {
         VisualMemory = 1,
         SimonSays = 2,
-        VerbalMemory = 3
+        VerbalMemory = 3,
+        NumberMemory = 4
     }
 }

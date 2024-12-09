@@ -1,0 +1,29 @@
+@page "/NumberMemory"
+
+@using Frontend.Games.NumberMemory
+
+<PageTitle>NumberMemory</PageTitle>
+
+<div class="game-container">
+    @if (Manager.GameOver)
+    {
+        <h1>Game Over</h1>
+        <p>Your Score: @Manager.Score</p>
+        <button class="button" @onclick="Manager.StartNewGame">Start New Game</button>
+    }
+    else
+    {
+        <h1>Number Memory Game</h1>
+        @if (Manager.ShowNumber)
+        {
+            <p class="number-display">@Manager.CurrentNumber</p>
+        }
+        else
+        {
+            <div style="margin-top: 40px;">
+                <input class="input-box" @bind="Manager.UserInput" placeholder="Enter the number" />
+                <button class="button" @onclick="Manager.CheckUserInput">Submit</button>
+            </div>
+        }
+    }
+</div>

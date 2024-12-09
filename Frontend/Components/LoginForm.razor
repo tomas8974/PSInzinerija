@@ -15,7 +15,12 @@
         <InputText id="password" class="form-control" @bind-Value="loginModel.Password" type="password" />
     </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
+    <div class="button-container">
+        <button type="submit" class="btn btn-primary">Login</button>
+        <NavLink class="btn btn-primary" href="registration">
+            Registration
+        </NavLink>
+    </div>
 </EditForm>
 
 @code {

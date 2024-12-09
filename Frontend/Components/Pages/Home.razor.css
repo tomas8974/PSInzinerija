@@ -1,0 +1,41 @@
+
+
+
+.pageButton {
+    display: inline-block;
+    padding: 20px 40px; /* Increase padding for bigger buttons */
+    font-size: 24px; /* Increase font size for bigger buttons */
+    text-align: center; /* Center the text */
+    background-color: #007bff; /* Primary color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+
+.pageButton.pressed.valid {
+    border-width: 5px;
+    background-color: rgb(240, 94, 240);
+    box-shadow: 0 2px 2px #3f3f3f;
+}
+
+
+
+.button-container {
+    margin-top: 20px; /* Adjust the value as needed to add spacing */
+}
+
+.button-spacing {
+    margin-bottom: 10px; /* Adjust the value as needed to add spacing between buttons */
+}
+
+.big-button {
+    padding: 20px 40px; /* Increase padding for bigger buttons */
+    font-size: 24px; /* Increase font size for bigger buttons */
+    width: 100%; /* Make buttons full width */
+    text-align: center; /* Center the text */
+}

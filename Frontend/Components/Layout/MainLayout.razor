@@ -4,21 +4,23 @@
 @inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
     <main>
-        <div class="top-row px-4">
-        <AuthorizeView>
-            <Authorized>
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @context.User.Identity?.Name!</a>
-                <LogoutButton />
-            </Authorized>
-            <NotAuthorized>
-                You are not logged in
-            </NotAuthorized>
-        </AuthorizeView>
+        <div class="top-row px-4 flex-container">
+            <NavLink class="btn btn-info" href="">
+                Home
+            </NavLink>
+            <div class="flex-right">
+                <AuthorizeView>
+                    <Authorized>
+                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @context.User.Identity?.Name!</a>
+                        <LogoutButton />
+                    </Authorized>
+                    <NotAuthorized>
+                        You are not logged in
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
         </div>
 
         <article class="content px-4">

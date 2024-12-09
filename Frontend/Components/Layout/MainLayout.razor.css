@@ -94,3 +94,16 @@ main {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+
+    .flex-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%; /* Ensure the container spans the full width */
+    }
+    
+    .flex-right {
+        display: flex;
+        align-items: center;
+    }

@@ -1,0 +1,12 @@
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Ensure the container spans the full width */
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.button-container .btn {
+    flex: 0 1 auto; /* Allow buttons to size based on content */
+    margin: 0 5px; /* Adjust as needed */
+}

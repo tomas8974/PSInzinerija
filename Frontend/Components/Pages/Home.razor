@@ -1,19 +1,43 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.JSInterop
 
 <PageTitle>Home</PageTitle>
 
 <h1>Welcome to itssoover Mind Games</h1>
 
-Select one of the available games
+    <AuthorizeView>
+        <NotAuthorized>
+            <LoginForm />
+        </NotAuthorized>
+    </AuthorizeView>
 
+    @* <AuthorizeView>
+                <NotAuthorized>
+                    <button class="buttonDefault">
+                        <NavLink class="nav-link" href="registration">
+                            Registration
+                        </NavLink>
+                    </button>
+                </NotAuthorized>
+            </AuthorizeView> *@
+    <div style="display: grid; gap: 10px; width: 45vh; margin: 0 auto; height: 45vh; position: relative;">
+            <NavLink class="pageButton" href="Leaderboard">
+                Leaderboard
+            </NavLink>
+            <NavLink class="pageButton" href="VisualMemory">
+                VisualMemory
+            </NavLink>
+            <NavLink class="pageButton" href="simonsays">
+                SimonSays
+            </NavLink>
+            <NavLink class="pageButton" href="VerbalMemory">
+                VerbalMemory
+            </NavLink>
+        </div>
+        
 
-<AuthorizeView>
-    <NotAuthorized>
-        <LoginForm />
-    </NotAuthorized>
-</AuthorizeView>
 
 
 @code {
@@ -25,3 +49,4 @@ Select one of the available games
             JSRuntime.InvokeVoidAsync("onBlazorReadyLog");
     }
 }    
+

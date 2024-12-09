@@ -3,7 +3,8 @@ COPY . ./src
 WORKDIR /src
 RUN dotnet build -o /app
 RUN dotnet publish -o /publish
-RUN ls /publish
+
+COPY ./Backend/GameRules /publish/GameRules
 COPY appsettings*.json /publish
  
 FROM mcr.microsoft.com/dotnet/aspnet:8.0

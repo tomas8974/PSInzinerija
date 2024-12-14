@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.JSInterop
+@inject NavigationManager _nav
 
 <PageTitle>Home</PageTitle>
 
@@ -9,32 +10,25 @@
 
     <AuthorizeView>
         <NotAuthorized>
-            <LoginForm />
+            <div style="margin-bottom: 100px;"> <!-- Pridedame papildomą tarpo elementą -->
+                <LoginForm />
+            </div>
         </NotAuthorized>
     </AuthorizeView>
 
-    @* <AuthorizeView>
-                <NotAuthorized>
-                    <button class="buttonDefault">
-                        <NavLink class="nav-link" href="registration">
-                            Registration
-                        </NavLink>
-                    </button>
-                </NotAuthorized>
-            </AuthorizeView> *@
     <div style="display: grid; gap: 10px; width: 45vh; margin: 0 auto; height: 45vh; position: relative;">
-            <NavLink class="pageButton" href="Leaderboard">
+            <button class="pageButton" @onclick="@(()=>_nav.NavigateTo("/Leaderboard"))">
                 Leaderboard
-            </NavLink>
-            <NavLink class="pageButton" href="VisualMemory">
+            </button>
+            <button class="pageButton" @onclick="@(()=>_nav.NavigateTo("/VisualMemory"))">
                 VisualMemory
-            </NavLink>
-            <NavLink class="pageButton" href="simonsays">
+            </button>
+            <button class="pageButton" @onclick="@(()=>_nav.NavigateTo("/simonsays"))">
                 SimonSays
-            </NavLink>
-            <NavLink class="pageButton" href="VerbalMemory">
+            </button>
+            <button class="pageButton" @onclick="@(()=>_nav.NavigateTo("/VerbalMemory"))">
                 VerbalMemory
-            </NavLink>
+            </button>
         </div>
         
 

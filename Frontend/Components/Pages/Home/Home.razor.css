@@ -3,10 +3,10 @@
 
 .pageButton {
     display: inline-block;
-    padding: 20px 40px; /* Increase padding for bigger buttons */
-    font-size: 24px; /* Increase font size for bigger buttons */
-    text-align: center; /* Center the text */
-    background-color: #007bff; /* Primary color */
+    padding: 20px 40px; 
+    font-size: 24px; 
+    text-align: center;
+    background-color: #0d6efd; 
     color: white;
     border: none;
     border-radius: 5px;

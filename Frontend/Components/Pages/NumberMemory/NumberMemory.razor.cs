@@ -38,7 +38,12 @@ namespace Frontend.Components.Pages.NumberMemory
             {
                 await FetchDataAsync();
             }
+            if (!Manager.ShowNumber && !Manager.GameOver)
+            {
+                await InputElement.FocusAsync();
+            }
         }
+
 
         // TODO: iskelti kitur
         private async Task SaveToDB(IGameManager gameManager)

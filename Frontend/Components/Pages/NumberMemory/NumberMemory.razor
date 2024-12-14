@@ -4,7 +4,6 @@
 
 <PageTitle>NumberMemory</PageTitle>
 
-
 <h2>High Score: @Manager.HighScore</h2>
 <h2>Current Score: @Manager.Score</h2>
 
@@ -24,8 +23,22 @@
         }
         else
         {
-            <input class="input-box" @bind="Manager.UserInput" placeholder="Enter the number" />
+            <input class="input-box" @ref="InputElement" value="@Manager.UserInput"
+                @oninput="e => Manager.UserInput = e.Value?.ToString() ?? string.Empty" @onkeydown="HandleKeyPress"
+                placeholder="Enter the number" />
             <button class="button" @onclick="Manager.CheckUserInput">Submit</button>
         }
     }
 </div>
+
+@code {
+    protected ElementReference InputElement;
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await Manager.CheckUserInput();
+        }
+    }
+}

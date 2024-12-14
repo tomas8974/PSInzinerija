@@ -53,7 +53,10 @@ namespace Frontend.Games.NumberMemory
                                                  .ToArray());
 
             OnStateChanged?.Invoke();
-            await Task.Delay(2000);
+            for (int i = 0; i < CurrentLevel; i++)
+            {
+                await Task.Delay(500);
+            }
             ShowNumber = false;
             OnStateChanged?.Invoke();
             OnStatisticsChanged?.Invoke();
@@ -71,6 +74,7 @@ namespace Frontend.Games.NumberMemory
             else
             {
                 GameOver = true;
+                OnStateChanged?.Invoke();
                 UpdateHighScore();
             }
         }

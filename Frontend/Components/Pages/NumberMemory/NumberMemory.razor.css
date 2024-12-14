@@ -8,11 +8,7 @@
     background-color: white;
     box-sizing: border-box;
     margin-top: -60px;
-}
-
-h1 {
-    font-size: 2rem;
-    color: white;
+    outline: none;
 }
 
 .number-display {

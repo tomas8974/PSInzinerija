@@ -7,16 +7,15 @@
 <h2>High Score: @Manager.HighScore</h2>
 <h2>Current Score: @Manager.Score</h2>
 
-<div class="game-container">
+<div class="game-container" @ref="GameElement" @onkeydown="HandleKeyPress" tabindex="0">
     @if (Manager.GameOver)
     {
-        <h1>Game Over</h1>
+        <h3>Game Over</h3>
         <p>Your Score: @Manager.Score</p>
         <button class="button" @onclick="Manager.StartNewGame">Start New Game</button>
     }
     else
     {
-        <h1>Number Memory Game</h1>
         @if (Manager.ShowNumber)
         {
             <p class="number-display">@Manager.CurrentNumber</p>
@@ -24,8 +23,7 @@
         else
         {
             <input class="input-box" @ref="InputElement" value="@Manager.UserInput"
-                @oninput="e => Manager.UserInput = e.Value?.ToString() ?? string.Empty" @onkeydown="HandleKeyPress"
-                placeholder="Enter the number" />
+                @oninput="e => Manager.UserInput = e.Value?.ToString() ?? string.Empty" placeholder="Enter the number" />
             <button class="button" @onclick="Manager.CheckUserInput">Submit</button>
         }
     }
@@ -33,12 +31,19 @@
 
 @code {
     protected ElementReference InputElement;
-
+    protected ElementReference GameElement;
     private async Task HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
         {
-            await Manager.CheckUserInput();
+            if (!Manager.GameOver)
+            {
+                await Manager.CheckUserInput();
+            }
+            else
+            {
+                await Manager.StartNewGame();
+            }
         }
     }
 }

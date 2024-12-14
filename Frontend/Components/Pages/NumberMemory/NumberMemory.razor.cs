@@ -42,6 +42,10 @@ namespace Frontend.Components.Pages.NumberMemory
             {
                 await InputElement.FocusAsync();
             }
+            if (Manager.GameOver)
+            {
+                await GameElement.FocusAsync();
+            }
         }
 
 

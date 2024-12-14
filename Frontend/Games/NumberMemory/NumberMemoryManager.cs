@@ -35,15 +35,15 @@ namespace Frontend.Games.NumberMemory
             }
         }
 
-        public void StartNewGame()
+        public async Task StartNewGame()
         {
             CurrentLevel = 1;
             Score = 0;
             GameOver = false;
-            GenerateNewNumber();
+            await GenerateNewNumber();
         }
 
-        private async void GenerateNewNumber()
+        private async Task GenerateNewNumber()
         {
             ShowNumber = true;
             OnStateChanged?.Invoke();
@@ -60,19 +60,18 @@ namespace Frontend.Games.NumberMemory
 
         }
 
-        public void CheckUserInput()
+        public async Task CheckUserInput()
         {
             if (UserInput == CurrentNumber)
             {
                 Score++;
                 CurrentLevel++;
-                GenerateNewNumber();
+                await GenerateNewNumber();
             }
             else
             {
                 GameOver = true;
                 UpdateHighScore();
-                OnStatisticsChanged?.Invoke();
             }
         }
 
@@ -81,7 +80,7 @@ namespace Frontend.Games.NumberMemory
             if (Score > HighScore)
             {
                 HighScore = Score;
-                SetHighScore(HighScore);
+                OnStatisticsChanged?.Invoke();
             }
         }
         public void LoadStatisticsFromJSON(string? json)

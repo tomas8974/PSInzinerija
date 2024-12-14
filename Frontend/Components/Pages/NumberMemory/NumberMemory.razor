@@ -4,6 +4,10 @@
 
 <PageTitle>NumberMemory</PageTitle>
 
+
+<h2>High Score: @Manager.HighScore</h2>
+<h2>Current Score: @Manager.Score</h2>
+
 <div class="game-container">
     @if (Manager.GameOver)
     {
@@ -20,10 +24,8 @@
         }
         else
         {
-            <div style="margin-top: 40px;">
-                <input class="input-box" @bind="Manager.UserInput" placeholder="Enter the number" />
-                <button class="button" @onclick="Manager.CheckUserInput">Submit</button>
-            </div>
+            <input class="input-box" @bind="Manager.UserInput" placeholder="Enter the number" />
+            <button class="button" @onclick="Manager.CheckUserInput">Submit</button>
         }
     }
 </div>

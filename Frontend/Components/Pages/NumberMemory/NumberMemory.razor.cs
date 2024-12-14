@@ -29,7 +29,7 @@ namespace Frontend.Components.Pages.NumberMemory
                 await SaveToDB(Manager);
                 await SessionStorage.SaveStateSessionStorage(Manager);
             };
-            Manager.StartNewGame();
+            await Manager.StartNewGame();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

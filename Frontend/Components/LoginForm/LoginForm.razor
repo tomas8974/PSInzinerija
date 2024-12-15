@@ -7,19 +7,19 @@
 
     <div class="form-group">
         <label for="email">Email</label>
-        <InputText id="email" class="form-control" @bind-Value="loginModel.Email" />
+        <InputText id="email" class="form-control light-gray-input" @bind-Value="loginModel.Email" />
     </div>
 
     <div class="form-group">
         <label for="password">Password</label>
-        <InputText id="password" class="form-control" @bind-Value="loginModel.Password" type="password" />
+        <InputText id="password" class="form-control light-gray-input" @bind-Value="loginModel.Password" type="password" />
     </div>
 
-    <div class="button-container">
-        <NavLink class="btn btn-primary" href="registration">
+    <div class="button-container" >
+        <NavLink class="btn btn-warning" href="registration">
             Registration
         </NavLink>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-warning">Login</button>
     </div>
 </EditForm>
 

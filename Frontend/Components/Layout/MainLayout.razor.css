@@ -107,3 +107,14 @@ main {
         display: flex;
         align-items: center;
     }
+
+    .dark-grey-background {
+        background-color: #3a3a3a; 
+        color: white; 
+        min-height: 100vh; 
+    }
+
+    .darker-grey-bg {
+        background-color: #333; /* Darker gray color */
+        color: #fff; /* Optional: Change text color to white for better contrast */
+    }

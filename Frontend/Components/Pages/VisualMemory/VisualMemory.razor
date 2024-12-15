@@ -13,13 +13,23 @@
 
 
 <div
-    style="display: grid; height: 75vmin; grid-gap: 1%; margin-top: 10px; grid-template-rows: repeat(@Manager.Pattern.GridSize, 1fr); grid-template-columns: repeat(@Manager.Pattern.GridSize, 1fr);">
+    style="display: grid; height: 60vmin; grid-gap: 0.5%; margin-top: 10px; grid-template-rows: repeat(@Manager.Pattern.GridSize, 1fr); grid-template-columns: repeat(@Manager.Pattern.GridSize, 1fr);">
     @foreach (var button in Manager.Pattern)
     {
         string buttonClass = button.Pressed
         ? button.Value == PatternValue.Valid ? "pressed-valid" : "pressed-invalid"
         : "not-pressed";
         <button class="button @buttonClass" disabled="@button.Pressed"
-            @onclick="async () => await Manager.HandleInput(button)" />
+            @onclick="async () => await Manager.HandleInput(button)">
+        </button>
     }
 </div>
+
+<div class="game-rules" style="margin-top: 20px;">
+    <h3>Rules:</h3>
+    <p>Remember the pattern and repeat it by clicking the buttons in the same order.</p>
+    <p>Each time you repeat the pattern correctly, the pattern will get longer.</p>
+    <p>Get as many correct as you can!</p>
+</div>
+
+

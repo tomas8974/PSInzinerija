@@ -10,9 +10,9 @@
 <div class="leaderboard-grid">
     @foreach (var game in Enum.GetValues(typeof(AvailableGames)).Cast<AvailableGames>()) {
         <div class="leaderboard-item">
-            <h2>@game Leaderboard</h2>
+            <h2 class="leaderboard-text">@game Leaderboard</h2>
             @if (leaderboards.ContainsKey(game) && leaderboards[game].Count != 0) {
-                <table class="table table-hover table-striped">
+                <table class="table table-hover table-striped leaderboard-text">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">Username</th>
@@ -23,16 +23,16 @@
                     <tbody>
                     @foreach (var entry in leaderboards[game]) {
                         <tr>
-                            <td>@entry.UserName</td>
-                            <td>@entry.HighScore</td>
-                            <td>@entry.RecordDate</td>
+                            <td class="leaderboard-text">@entry.UserName</td>
+                            <td class="leaderboard-text">@entry.HighScore</td>
+                            <td class="leaderboard-text">@entry.RecordDate</td>
                         </tr>
                     }
                     </tbody>
                 </table>
             }
             else {
-                <b>Leaderboard is empty</b>
+                <p class="leaderboard-text">No data available</p><b>Leaderboard is empty</b>
             }
         </div>
     }

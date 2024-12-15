@@ -5,7 +5,7 @@
     justify-content: center;
     height: 60vh;
     font-family: Arial, sans-serif;
-    background-color: white;
+    background-color: #3a3a3a;
     box-sizing: border-box;
 }
 
@@ -14,9 +14,10 @@
     font-weight: bold;
     margin-bottom: 30px;
     text-align: center;
-    background-color: lightgray;
+    text-emphasis-color: black;
     padding: 20px 40px;
     border-radius: 10px;
+    color: white;
 }
 
 
@@ -32,7 +33,7 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    background-color: dodgerblue;
+    background-color: #fd950d;
     color: white;
     transition: background-color 0.3s ease;
 }

@@ -29,11 +29,16 @@
         </div>
     </div>
 
-
-    @if (@gameInfo != null)
+    <div class="game-rules" style="margin-top: 20px;">
+        <h3>Rules:</h3>
+        <p>Simon will play a sequence of buttons. Repeat the sequence by clicking the buttons in the same order.</p>
+        <p>Each time you repeat the sequence correctly, the sequence will get longer.</p>
+        <p>Get as many correct as you can!</p>
+    </div>
+    @* @if (@gameInfo != null)
     {
         <h2>@gameInfo.Value.GameName Žaidimo taisyklės</h2>
         <p>@gameInfo.Value.Rules</p>
         <h2>Žaidimo išleidimo data: @gameInfo.Value.ReleaseDate </h2>
-    }
+    } *@
 </div>

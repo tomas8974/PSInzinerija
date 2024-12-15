@@ -5,7 +5,6 @@
     justify-content: center;
     height: 60vh;
     font-family: Arial, sans-serif;
-    background-color: white;
     box-sizing: border-box;
     margin-top: -60px;
 }
@@ -18,7 +17,7 @@ h1 {
 .number-display {
     font-size: 3rem;
     font-weight: bold;
-    color: blue;
+    color: #fd950d;
     margin: 20px 0;
 }
 
@@ -32,7 +31,7 @@ h1 {
 }
 
 .button {
-    background-color: royalblue;
+    background-color: #fd950d;
     color: #fff;
     padding: 10px 20px;
     font-size: 1rem;
@@ -44,5 +43,5 @@ h1 {
 }
 
 .button:hover {
-    background-color: blue;
+    background-color: #fd950d;
 }

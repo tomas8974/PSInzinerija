@@ -1,3 +1,16 @@
+
+    .light-gray-input {
+        background-color: lightgray;
+        border: 1px solid #ccc;
+        color: #333;
+    }
+
+.light-gray-input:focus {
+    background-color: #e0e0e0; /* Slightly darker gray when focused */
+    outline: none; /* Remove default outline */
+    border-color: #999; /* Change border color when focused */
+}
+
 .button-container {
     display: flex;
     justify-content: space-between;

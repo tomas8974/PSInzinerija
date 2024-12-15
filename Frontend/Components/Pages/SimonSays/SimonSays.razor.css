@@ -19,7 +19,7 @@
 
 .buttonDefault.pressed.valid{
     border-width: 5px;
-    background-color: cyan;
+    background-color: rgb(47, 255, 47);
     box-shadow: 0 2px 2px #3f3f3f;
 }
 

@@ -3,16 +3,16 @@
 @inject NavigationManager _nav
 @inherits LayoutComponentBase
 
-<div class="page dark-grey-background">
+<div class="page body">
 
     <main>
         <div class="top-row px-4 flex-container darker-grey-bg">
             
             <div>
-                <button class="btn btn-warning" @onclick="@(()=>_nav.NavigateTo(""))">
+                <button class="pageButton" @onclick="@(()=>_nav.NavigateTo(""))">
                     Home
                 </button>
-                <button class="btn btn-warning" @onclick="@(()=>_nav.NavigateTo("/Leaderboard"))">
+                <button class="pageButton" @onclick="@(()=>_nav.NavigateTo("/Leaderboard"))">
                     Leaderboard
                 </button>
             </div>

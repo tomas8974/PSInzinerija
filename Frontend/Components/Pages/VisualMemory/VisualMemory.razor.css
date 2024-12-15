@@ -40,3 +40,15 @@
     margin: 0 auto;
     width: 200px;
 }
+
+.otherButton {
+    background-color: #fd950d;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}

@@ -23,3 +23,21 @@
     flex: 0 1 auto; /* Allow buttons to size based on content */
     margin: 0 5px; /* Adjust as needed */
 }
+
+.white-text {
+    color: white;
+}
+
+.pageButton {
+    display: inline-block;
+    padding: 5px 20px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #fd950d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

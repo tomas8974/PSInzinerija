@@ -6,10 +6,10 @@
 
 <h1 style="display: flex; justify-content: space-between; align-items: center; font-size: 30px; margin: 0;">
     <div>
-        <button class="buttonDefault start" @onclick="async () => await DeleteHS(Manager)">Reset HighScore</button>
-        <span>High-score: @Manager.HighScore</span>
+        <button class="otherButton" @onclick="async () => await DeleteHS(Manager)">Reset HighScore</button>
+        <span style="color: white;">High-score: @Manager.HighScore</span>
     </div>
-    <span style="margin-left: auto;">Recent Score: @Manager.RecentScore Current Score: @Manager.Score</span>
+    <span style="margin-left: auto; color: white;">Recent Score: @Manager.RecentScore Current Score: @Manager.Score</span>
 </h1>
 
 
@@ -26,7 +26,7 @@
     }
 </div>
 
-<div class="game-rules" style="margin-top: 20px;">
+<div class="game-rules" style="margin-top: 20px; color: white;">
     <h3>Rules:</h3>
     <p>Remember the pattern and repeat it by clicking the buttons in the same order.</p>
     <p>Each time you repeat the pattern correctly, the pattern will get longer.</p>

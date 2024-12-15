@@ -4,10 +4,10 @@
 
 <PageTitle>NumberMemory</PageTitle>
 
-<h2>High Score: @Manager.HighScore</h2>
-<h2>Current Score: @Manager.Score</h2>
+<h2 style=" color: white;">High Score: @Manager.HighScore</h2>
+<h2 style=" color: white;">Current Score: @Manager.Score</h2>
 
-<div class="game-container" @ref="GameElement" @onkeydown="HandleKeyPress" tabindex="0">
+<div class="game-container" style=" color: white;" @ref="GameElement" @onkeydown="HandleKeyPress" tabindex="0">
     @if (Manager.GameOver)
     {
         <h3>Game Over</h3>
@@ -30,7 +30,7 @@
 </div>
 
 <div class="game-rules"
-     style="margin-top: 20px;">
+     style="margin-top: 20px; color: white;">
     <h3>Rules:</h3>
     <p>Remember the numbers that appear on the screen.</p>
     <p>After the numbers disappear, enter the numbers in the order they appeared.</p>

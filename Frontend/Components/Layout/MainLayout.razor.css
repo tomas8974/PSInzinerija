@@ -113,8 +113,43 @@ main {
         color: white; 
         min-height: 100vh; 
     }
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .body {
+        --s: 100px; /* control the size */
+        --c1: #1d1d1d;
+        --c2: #4e4f51;
+        --c3: #3c3c3c;
+        
+        background:
+          repeating-conic-gradient(from 30deg,#0000 0 120deg,var(--c3) 0 50%) 
+           calc(var(--s)/2) calc(var(--s)*tan(30deg)/2),
+          repeating-conic-gradient(from 30deg,var(--c1) 0 60deg,var(--c2) 0 120deg,var(--c3) 0 50%);
+        background-size: var(--s) calc(var(--s)*tan(30deg));
+        height: 100vh; /* Ensure the body spans the full height */
+        margin: 0; /* Remove default margin */
+    }
 
     .darker-grey-bg {
         background-color: #868686;
         color: #fff;
     }
+
+    .pageButton {
+        display: inline-block;
+        padding: 5px 40px;
+        font-size: 18px;
+        text-align: center;
+        background-color: #fd950d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    

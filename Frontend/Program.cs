@@ -3,28 +3,21 @@ using Frontend.Services;
 using PSInzinerija1.Shared.Data.Models.Stats;
 
 using Microsoft.AspNetCore.Components.Authorization;
-using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
+var configuration = builder.Configuration;
+
+string backendAddress = configuration.GetValue<string>("BackendAddress") ?? throw new InvalidOperationException("BackendAddress is missing from configuration");
 builder.Services.AddHttpClient("BackendApi", options =>
 {
-    options.BaseAddress = new Uri("http://backend:5000/");
+    options.BaseAddress = new Uri(backendAddress);
     options.DefaultRequestHeaders.Add("Access-Control-Allow-Credentials", "true");
 })
-.AddHeaderPropagation()
-.ConfigurePrimaryHttpMessageHandler(() =>
-{
-    return new HttpClientHandler
-    {
-        UseCookies = true,
-        CookieContainer = new CookieContainer(),
-        AllowAutoRedirect = true,
-    };
-});
+.AddHeaderPropagation();
 
 builder.Services.AddHeaderPropagation(options =>
 {

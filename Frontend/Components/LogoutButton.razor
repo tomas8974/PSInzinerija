@@ -1,3 +1,4 @@
+@inject IJSRuntime JS
 <button @onclick="Logout" class="nav-link btn btn-link text-dark">Logout</button>
 
 @code {
@@ -14,6 +15,8 @@
             var response = await client.PostAsync("api/logout", null);
             if (response.IsSuccessStatusCode)
             {
+                string cookie = ".AspNetCore.Identity.Application=";
+                await JS.InvokeVoidAsync("saveCookie", cookie);
                 NavigationManager.NavigateTo("/", true);
             }
             else

@@ -20,11 +20,12 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Services.AddHttpClient();
 
+string frontendAddress = configuration.GetValue<string>("FrontendAddress") ?? throw new InvalidOperationException("FrontendAddress is missing from configuration");
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://frontend:5001/")
+        policy.WithOrigins(frontendAddress)
             .AllowCredentials()
             .AllowAnyMethod()
             .AllowAnyHeader();
@@ -94,8 +95,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-    using var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-    context?.Database.EnsureCreated();
+    using var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context?.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.
@@ -135,7 +136,6 @@ app.MapControllers();
 app.MapPost("/api/logout", async (SignInManager<User> signInManager) =>
 {
     await signInManager.SignOutAsync();
-    return TypedResults.Ok();
 })
 .RequireAuthorization();
 

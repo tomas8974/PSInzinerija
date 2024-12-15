@@ -12,5 +12,6 @@ COPY --from=build  /publish /app
 WORKDIR /app
 RUN mkdir -p /data
 RUN chmod 777 /data
+ENV ConnectionStrings__DefaultConnection="Data Source=/data/SQLLiteDatabase.db"
 EXPOSE 5000
 CMD ["./Backend"]

@@ -32,7 +32,7 @@ namespace Frontend.Components.Pages.VerbalMemory
             List<string>? wordList = null;
             try
             {
-                wordList = await WordListAPIService.GetWordsFromApiAsync("SimonSaysRules.txt");
+                wordList = await WordListAPIService.GetWordsFromApiAsync("RandomWords.txt");
             }
             catch (WordListLoadException ex)
             {

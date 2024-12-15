@@ -10,5 +10,7 @@ COPY appsettings*.json /publish
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 COPY --from=build  /publish /app
 WORKDIR /app
+RUN mkdir -p /data
+RUN chmod 777 /data
 EXPOSE 5000
 CMD ["./Backend"]

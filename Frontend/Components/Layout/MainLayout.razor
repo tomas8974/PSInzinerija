@@ -17,11 +17,11 @@
                 </button>
             </div>
             
-            <h3>itssoover Mind Games</h3>
+            <h3>itssoover Games</h3>
             <div class="flex-right">
                 <AuthorizeView>
                     <Authorized>
-                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @context.User.Identity?.Name!</a>
+                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @context.User.Identity?.Name!</a>
                         <LogoutButton />
                     </Authorized>
                     <NotAuthorized>

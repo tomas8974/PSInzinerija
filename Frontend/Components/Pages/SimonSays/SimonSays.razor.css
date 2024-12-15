@@ -19,7 +19,7 @@
 
 .buttonDefault.pressed.valid{
     border-width: 5px;
-    background-color: rgb(47, 255, 47);
+    background-color: #f3ac13;
     box-shadow: 0 2px 2px #3f3f3f;
 }
 
@@ -48,6 +48,8 @@
     margin: 0 auto;
     width: 200px;
 }
-
+.error {
+    background-color: red;
+}
 
 

@@ -18,6 +18,10 @@
             @foreach (var button in gameManager.Buttons)
             {
                 var buttonClass = button.IsLit ? "buttonDefault pressed valid" : "buttonDefault";
+                if (button.IsError)
+                {
+                    buttonClass += " pressed invalid";
+                }
                 <button class="@buttonClass"
                     @onclick="async () => await button.OnClick(StateHasChanged)">@button.Text</button>
             }

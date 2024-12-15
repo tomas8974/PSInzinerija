@@ -152,5 +152,10 @@ namespace Frontend.Games.VisualMemory
             HighScore = highScore.Value;
             return true;
         }
+
+        public void RemoveHighScore()
+        {
+            HighScore = 0;
+        }
     }
 }

@@ -63,9 +63,11 @@ namespace Frontend.Components.Pages.VisualMemory
 
         private async Task DeleteHS(IGameManager gameManager)
         {
+            Manager.RemoveHighScore();
             var res = await HighScoreAPIService.DeleteFromDbAsync(gameManager.GameID);
 
             Logger.LogInformation(res ? "Deleted successfully" : "Failed to delete");
+            
         }
 
         private async Task FetchDataAsync()

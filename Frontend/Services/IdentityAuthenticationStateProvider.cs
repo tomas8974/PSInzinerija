@@ -28,7 +28,7 @@ namespace Frontend.Services
             _logger.LogInformation(_httpClient.DefaultRequestHeaders.Aggregate("", (a, b) => a + $"{b.Key}: {string.Join(", ", b.Value)}\n"));
             try
             {
-                userInfo = await _httpClient.GetFromJsonAsync<UserInfo>("user/info");
+                userInfo = await _httpClient.GetFromJsonAsync<UserInfo>("api/user/info");
             }
             catch (Exception e)
             {

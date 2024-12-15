@@ -30,7 +30,7 @@
 
     private async Task HandleLogin()
     {
-        var url = "login?useCookies=true&useSessionCookies=true"; // Backend login URL
+        var url = "api/login?useCookies=true&useSessionCookies=true"; // Backend login URL
         var client = HttpClientFactory.CreateClient("BackendApi");
         var formData = new
         {

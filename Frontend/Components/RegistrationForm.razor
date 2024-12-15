@@ -28,7 +28,7 @@
 
     private async Task HandleRegistration()
     {
-        var url = "register"; // Backend register URL
+        var url = "api/register"; // Backend register URL
         var client = HttpClientFactory.CreateClient("BackendApi");
         var formData = new
         {

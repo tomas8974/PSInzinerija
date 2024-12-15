@@ -21,8 +21,8 @@ else
         </div>
 
         <div class="buttons">
-            <button class="game-button" @onclick="async() => await Manager.HandleSeenButtonClick()">Seen</button>
-            <button class="game-button" @onclick="async() => await Manager.HandleNewButtonClick()">New</button>
+            <button class="clickable-button pageButton game-button" @onclick="async() => await Manager.HandleSeenButtonClick()">Seen</button>
+            <button class="clickable-button pageButton game-button" @onclick="async() => await Manager.HandleNewButtonClick()">New</button>
         </div>
 
         <div class="mistake-counter">

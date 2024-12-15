@@ -1,6 +1,7 @@
 html,
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
 }
 
 a,
@@ -54,4 +55,42 @@ h1:focus {
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
+}
+
+.clickable-button {
+    border: 2px solid whitesmoke;
+    transition: transform 0.3s ease, box-shadow 0.3s linear, background-color 1s ease;
+    box-sizing: border-box;
+}
+
+.clickable-button:hover {
+    box-shadow: 0 0 15px rgba(255, 150, 13, 0.5);
+    filter: brightness(1.2);
+}
+
+.clickable-button.moves-on-hover:hover {
+    transform: translateY(-3px);
+}
+
+.clickable-button:active {
+    transform: translateY(0);
+    filter: brightness(0.8);
+    box-shadow: none;
+}
+
+.authentication-form {
+    max-width: 25rem;
+}
+
+.pageButton {
+    display: inline-block;
+    padding: 5px 40px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #fd950d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
 }

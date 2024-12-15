@@ -2,7 +2,7 @@
 @inject NavigationManager NavigationManager
 
 
-<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+<EditForm Model="@loginModel" class="authentication-form" OnValidSubmit="HandleLogin">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -17,10 +17,10 @@
     </div>
 
     <div class="button-container" >
-        <button class="pageButton"@onclick="@(() => NavigationManager.NavigateTo($"/registration"))">
+        <button class="pageButton clickable-button"@onclick="@(() => NavigationManager.NavigateTo($"/registration"))">
             Registration
         </button>
-        <button type="submit" class="pageButton">Login</button>
+        <button type="submit" class="pageButton clickable-button">Login</button>
     </div>
 </EditForm>
 

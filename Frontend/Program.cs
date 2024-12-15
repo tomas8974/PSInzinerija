@@ -3,6 +3,7 @@ using Frontend.Services;
 using PSInzinerija1.Shared.Data.Models.Stats;
 
 using Microsoft.AspNetCore.Components.Authorization;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,17 @@ builder.Services.AddHttpClient("BackendApi", options =>
 {
     options.BaseAddress = new Uri("http://localhost:5211");
     options.DefaultRequestHeaders.Add("Access-Control-Allow-Credentials", "true");
-}).AddHeaderPropagation();
+})
+.AddHeaderPropagation()
+.ConfigurePrimaryHttpMessageHandler(() =>
+{
+    return new HttpClientHandler
+    {
+        UseCookies = true,
+        CookieContainer = new CookieContainer(),
+        AllowAutoRedirect = true,
+    };
+});
 
 builder.Services.AddHeaderPropagation(options =>
 {
@@ -26,6 +37,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, IdentityAuthenticationSt
 builder.Services.AddScoped<StatsAPIService<VisualMemoryStats>>();
 builder.Services.AddScoped<StatsAPIService<SimonSaysStats>>();
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddCascadingAuthenticationState();
 
 // Add services to the container.

@@ -1,5 +1,7 @@
 @inject IHttpClientFactory HttpClientFactory
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JS
+@inject IHttpContextAccessor HttpContextAccessor 
 
 <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
     <DataAnnotationsValidator />
@@ -40,9 +42,17 @@
         {
             var response = await client.PostAsJsonAsync(url, formData);
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode && response.Headers.TryGetValues("Set-Cookie", out var cookies))
             {
+                Console.WriteLine(HttpContextAccessor.HttpContext?.Request.Cookies.Count);
+                @* string[] keyValue = cookies.First().Split('=', 2);
+                var key = keyValue[0].Trim();
+                var value = keyValue[1].Trim();
+                HttpContextAccessor.HttpContext?.Response.Cookies.Append(key, value); *@
+                
                 Console.WriteLine("Success!");
+                @* await JS.InvokeVoidAsync("saveCookie", cookie); *@
+                
                 NavigationManager.Refresh(true);
             }
             else

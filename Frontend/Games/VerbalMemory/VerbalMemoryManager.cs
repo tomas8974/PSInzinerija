@@ -72,7 +72,6 @@ namespace Frontend.Games.VerbalMemory
         {
             if (GameOver)
             {
-                await StartNewGame(WordList);
                 return;
             }
 

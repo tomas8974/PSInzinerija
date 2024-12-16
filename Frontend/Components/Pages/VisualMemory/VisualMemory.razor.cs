@@ -23,6 +23,7 @@ namespace Frontend.Components.Pages.VisualMemory
         [Inject]
         ILogger<VisualMemory> Logger { get; set; }
         VisualMemoryManager Manager { get; set; }
+        Func<Task> _onNextRender;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
         protected override async Task OnInitializedAsync()
@@ -49,7 +50,7 @@ namespace Frontend.Components.Pages.VisualMemory
                 await FetchDataAsync();
                 await FetchStatsAsync();
             }
-            
+            _onNextRender?.Invoke();
         }
 
         // TODO: iskelti kitur
@@ -65,9 +66,9 @@ namespace Frontend.Components.Pages.VisualMemory
         {
             Manager.RemoveHighScore();
             var res = await HighScoreAPIService.DeleteFromDbAsync(gameManager.GameID);
+            _onNextRender += async () => await SessionStorage.DeleteStateSessionStorage(Manager);
 
             Logger.LogInformation(res ? "Deleted successfully" : "Failed to delete");
-            
         }
 
         private async Task FetchDataAsync()

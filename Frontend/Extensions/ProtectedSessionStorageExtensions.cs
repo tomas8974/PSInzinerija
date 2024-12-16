@@ -11,6 +11,11 @@ namespace Frontend.Extensions
             await sessionStorage.SetAsync(manager.GameID.ToString(), manager.SerializedStatistics);
         }
 
+        public static async Task DeleteStateSessionStorage(this ProtectedSessionStorage sessionStorage, IGameManager manager)
+        {
+            await sessionStorage.DeleteAsync(manager.GameID.ToString());
+        }
+
         public static async Task LoadFromSessionStorage(this ProtectedSessionStorage sessionStorage, IGameManager manager)
         {
             var result = await sessionStorage.GetAsync<string>(manager.GameID.ToString());

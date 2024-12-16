@@ -31,14 +31,15 @@ namespace Frontend.Games.VerbalMemory
                 return json.ToString();
             }
         }
+
         public async Task StartNewGame(List<string> words)
         {
             WordList = words;
             MistakeCount = 0;
             Score = 0;
             WordsShown.Clear();
-            GameOver = false;
             ShowRandomWord();
+            GameOver = false;
             await Task.CompletedTask;
         }
 
@@ -54,19 +55,24 @@ namespace Frontend.Games.VerbalMemory
                 MistakeCount++;
             }
 
-            await CheckGameOver();
-            if (!GameOver)
+            var gameOver = CheckGameOver();
+
+            if (gameOver)
             {
-                Score++;
-                WordsShown.Add(CurrentWord);
-                ShowRandomWord();
+                await StartNewGame(WordList);
+                return;
             }
+
+            Score++;
+            WordsShown.Add(CurrentWord);
+            ShowRandomWord();
         }
 
         public async Task HandleSeenButtonClick()
         {
             if (GameOver)
             {
+                await StartNewGame(WordList);
                 return;
             }
 
@@ -75,17 +81,19 @@ namespace Frontend.Games.VerbalMemory
                 MistakeCount++;
             }
 
-            await CheckGameOver();
-
-            if (!GameOver)
+            var gameOver = CheckGameOver();
+            if (gameOver)
             {
-                Score++;
-                WordsShown.Add(CurrentWord);
-                ShowRandomWord();
+                await StartNewGame(WordList);
+                return;
             }
+
+            Score++;
+            WordsShown.Add(CurrentWord);
+            ShowRandomWord();
         }
 
-        private async Task CheckGameOver()
+        private bool CheckGameOver()
         {
             if (MistakeCount >= 3)
             {
@@ -96,10 +104,11 @@ namespace Frontend.Games.VerbalMemory
                 }
 
                 GameOver = true;
-                await StartNewGame(WordList);
+                return true;
             }
-        }
 
+            return false;
+        }
 
         private void ShowRandomWord()
         {
@@ -130,8 +139,6 @@ namespace Frontend.Games.VerbalMemory
             }
         }
 
-
-
         public void LoadStatisticsFromJSON(string? json)
         {
             if (json == null)
@@ -145,7 +152,6 @@ namespace Frontend.Games.VerbalMemory
             {
                 HighScore = jsonObject[nameof(HighScore)].Deserialize<int>();
             }
-
         }
 
         public bool SetHighScore(int? highScore)

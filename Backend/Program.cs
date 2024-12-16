@@ -132,24 +132,6 @@ app.MapSwagger();
 app.MapModifiedIdentityApi<User>();
 app.MapControllers();
 
-// temp
-app.MapPost("/api/logout", async (SignInManager<User> signInManager) =>
-{
-    await signInManager.SignOutAsync();
-})
-.RequireAuthorization();
-
-// temp
-app.MapGet("/api/user/info", async Task<Results<Ok<UserInfo>, ValidationProblem, NotFound>>
-    (ClaimsPrincipal claimsPrincipal, [FromServices] IServiceProvider sp) =>
-{
-    var userManager = sp.GetRequiredService<UserManager<User>>();
-    return await userManager.GetUserAsync(claimsPrincipal) is not { } user
-        ? (Results<Ok<UserInfo>, ValidationProblem, NotFound>)TypedResults.NotFound()
-        : TypedResults.Ok(new UserInfo(user.Email, user.UserName));
-});
-
-
 app.Run();
 
 public partial class Program { }

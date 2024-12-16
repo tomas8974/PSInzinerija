@@ -63,3 +63,8 @@
     align-items: center;
     justify-content: center;
 }
+
+.largePageButton {
+    padding: 20px 40px; /* Increase padding */
+    font-size: 20px; /* Increase font size */
+}

@@ -94,3 +94,18 @@ h1:focus {
     text-decoration: none;
     cursor: pointer;
 }
+
+.pageButton:hover {
+    box-shadow: 0 0 15px rgba(255, 150, 13, 0.5);
+    filter: brightness(1.2);
+}
+
+.pageButton.moves-on-hover:hover {
+    transform: translateY(-3px);
+}
+
+.pageButton:active {
+    transform: translateY(0);
+    filter: brightness(0.8);
+    box-shadow: none;
+}

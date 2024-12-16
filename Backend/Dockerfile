@@ -5,6 +5,7 @@ RUN dotnet build -o /app
 RUN dotnet publish -o /publish
 
 COPY ./Backend/GameRules /publish/GameRules
+COPY ./Backend/WordListSources /publish/WordListSources
 COPY appsettings*.json /publish
  
 FROM mcr.microsoft.com/dotnet/aspnet:8.0

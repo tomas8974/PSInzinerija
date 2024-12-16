@@ -13,7 +13,7 @@ public class WordListControllerTests
     {
         _wordListService = new WordListService();
         _controller = new WordListController(_wordListService);
-        _testDirectory = Path.Combine(Directory.GetCurrentDirectory(), "GameRules");
+        _testDirectory = Path.Combine(Directory.GetCurrentDirectory(), "WordListSources");
 
         if (!Directory.Exists(_testDirectory))
         {

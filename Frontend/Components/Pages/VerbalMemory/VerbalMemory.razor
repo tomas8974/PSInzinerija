@@ -4,12 +4,12 @@
 
 <PageTitle>VerbalMemory</PageTitle>
 
-<h2>High Score: @Manager.HighScore</h2>
-<h2>Current Score: @Manager.Score</h2>
+<h2 style=" color: white;">High Score: @Manager.HighScore</h2>
+<h2 style=" color: white;">Current Score: @Manager.Score</h2>
 
 @if (LoadFailed)
 {
-    <div class="error-message">
+    <div class="error-message" style=" color: white;">
         <h3>Error: Failed to load the word list.</h3>
     </div>
 }
@@ -21,8 +21,8 @@ else
         </div>
 
         <div class="buttons">
-            <button class="game-button" @onclick="async() => await Manager.HandleSeenButtonClick()">Seen</button>
-            <button class="game-button" @onclick="async() => await Manager.HandleNewButtonClick()">New</button>
+            <button class="clickable-button pageButton game-button" @onclick="async() => await Manager.HandleSeenButtonClick()">Seen</button>
+            <button class="clickable-button pageButton game-button" @onclick="async() => await Manager.HandleNewButtonClick()">New</button>
         </div>
 
         <div class="mistake-counter">
@@ -30,7 +30,7 @@ else
         </div>
     </div>
     <div class="game-rules"
-            style="margin-top: 20px;">
+            style="margin-top: 20px; color: white;">
             <h3>Rules:</h3>
             <p>Click "New" to get a new word. Click "Seen" if you have seen the word before.</p>
             <p>Each word can only be seen once. If you click "Seen" on a word you have not seen before, you will lose a point.</p>

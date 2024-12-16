@@ -2,20 +2,21 @@
 
 <PageTitle>Registration</PageTitle>
 
-<h1>Registration</h1><br>
-<h4>Please fill in the fields below.</h4>
-<div style="color: red;">Fields marked with * are mandatory.</div><br>
+<div style="color: white;">
+    <h1>Registration</h1><br>
+    <h4>Please fill out the fields below.</h4>
 
-<AuthorizeView>
-    <NotAuthorized>
-        <RegistrationForm />
-    </NotAuthorized>
-    <Authorized>
-        <h1>
-            You are already logged in!
-        </h1>
-    </Authorized>
-</AuthorizeView>
+    <AuthorizeView>
+        <NotAuthorized>
+            <RegistrationForm />
+        </NotAuthorized>
+        <Authorized>
+            <h1>
+                You are already logged in!
+            </h1>
+        </Authorized>
+    </AuthorizeView>
+</div>
 
 
 @code {

@@ -1,7 +1,7 @@
 @inject IHttpClientFactory HttpClientFactory
 @inject NavigationManager NavigationManager
 
-<EditForm Model="@registrationModel" OnValidSubmit="HandleRegistration">
+<EditForm Model="@registrationModel" class="authentication-form" OnValidSubmit="HandleRegistration">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -20,7 +20,7 @@
         <InputText id="password" class="form-control" @bind-Value="registrationModel.Password" type="password" />
     </div>
 
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" style="margin-top: 20px;" class="clickable-button pageButton">Register</button>
 </EditForm>
 
 @code {

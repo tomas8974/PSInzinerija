@@ -21,7 +21,7 @@
     <div class="game-buttons-grid" style="display: grid; gap: 10px; width: 45vh; margin: 0 auto; height: 45vh; position: relative;">
             
         @foreach (var game in Enum.GetValues(typeof(AvailableGames)).Cast<AvailableGames>()) {
-            <button class="pageButton" @onclick="@(() => _nav.NavigateTo($"/{game}"))">
+            <button class="pageButton clickable-button moves-on-hover game-selection-button" @onclick="@(() => _nav.NavigateTo($"/{game}"))">
                 @game
             </button>
         }

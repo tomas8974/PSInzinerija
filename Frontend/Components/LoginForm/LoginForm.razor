@@ -2,25 +2,26 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
 
-<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+
+<EditForm Model="@loginModel" class="authentication-form" OnValidSubmit="HandleLogin">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email" class="white-text">Email</label>
         <InputText id="email" class="form-control light-gray-input" @bind-Value="loginModel.Email" />
     </div>
 
     <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password" class="white-text">Password</label>
         <InputText id="password" class="form-control light-gray-input" @bind-Value="loginModel.Password" type="password" />
     </div>
 
     <div class="button-container" >
-        <NavLink class="btn btn-warning" href="registration">
+        <button class="pageButton clickable-button"@onclick="@(() => NavigationManager.NavigateTo($"/registration"))">
             Registration
-        </NavLink>
-        <button type="submit" class="btn btn-warning">Login</button>
+        </button>
+        <button type="submit" class="pageButton clickable-button">Login</button>
     </div>
 </EditForm>
 

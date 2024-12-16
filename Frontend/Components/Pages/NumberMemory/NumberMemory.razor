@@ -4,15 +4,15 @@
 
 <PageTitle>NumberMemory</PageTitle>
 
-<h2>High Score: @Manager.HighScore</h2>
-<h2>Current Score: @Manager.Score</h2>
+<h2 style=" color: white;">High Score: @Manager.HighScore</h2>
+<h2 style=" color: white;">Current Score: @Manager.Score</h2>
 
-<div class="game-container" @ref="GameElement" @onkeydown="HandleKeyPress" tabindex="0">
+<div class="game-container" style=" color: white;" @ref="GameElement" @onkeydown="HandleKeyPress" tabindex="0">
     @if (Manager.GameOver)
     {
         <h3>Game Over</h3>
         <p>Your Score: @Manager.Score</p>
-        <button class="button" @onclick="Manager.StartNewGame">Start New Game</button>
+        <button class="pageButton" @onclick="Manager.StartNewGame">Start New Game</button>
     }
     else
     {
@@ -22,15 +22,19 @@
         }
         else
         {
-            <input class="input-box" @ref="InputElement" value="@Manager.UserInput"
-                @oninput="e => Manager.UserInput = e.Value?.ToString() ?? string.Empty" placeholder="Enter the number" />
-            <button class="button" @onclick="Manager.CheckUserInput">Submit</button>
+            <div style="margin-top: 50px;">
+                <input class="input-box" @ref="InputElement" value="@Manager.UserInput"
+                    @oninput="e => Manager.UserInput = e.Value?.ToString() ?? string.Empty" placeholder="Enter the number" />
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="pageButton" @onclick="Manager.CheckUserInput">Submit</button>
+            </div>
         }
     }
 </div>
 
 <div class="game-rules"
-     style="margin-top: 20px;">
+     style="margin-top: 20px; color: white;">
     <h3>Rules:</h3>
     <p>Remember the numbers that appear on the screen.</p>
     <p>After the numbers disappear, enter the numbers in the order they appeared.</p>

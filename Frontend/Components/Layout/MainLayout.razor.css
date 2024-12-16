@@ -21,27 +21,30 @@ main {
     align-items: center;
 }
 
-    .top-row ::deep a, .top-row ::deep .btn-link {
-        white-space: nowrap;
-        margin-left: 1.5rem;
-        text-decoration: none;
-    }
+.top-row ::deep a,
+.top-row ::deep .btn-link {
+    white-space: nowrap;
+    margin-left: 1.5rem;
+    text-decoration: none;
+}
 
-    .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
-        text-decoration: underline;
-    }
+.top-row ::deep a:hover,
+.top-row ::deep .btn-link:hover {
+    text-decoration: underline;
+}
 
-    .top-row ::deep a:first-child {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.top-row ::deep a:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 @media (max-width: 640.98px) {
     .top-row {
         justify-content: space-between;
     }
 
-    .top-row ::deep a, .top-row ::deep .btn-link {
+    .top-row ::deep a,
+    .top-row ::deep .btn-link {
         margin-left: 0;
     }
 }
@@ -70,7 +73,8 @@ main {
         width: 0;
     }
 
-    .top-row, article {
+    .top-row,
+    article {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
@@ -88,33 +92,76 @@ main {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
 
 
-    .flex-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%; /* Ensure the container spans the full width */
-    }
-    
-    .flex-right {
-        display: flex;
-        align-items: center;
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* Ensure the container spans the full width */
+}
+
+.flex-right {
+    display: flex;
+    align-items: center;
+}
+
+.dark-grey-background {
+    background-color: #3a3a3a;
+    color: white;
+    min-height: 100vh;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.body {
+    background: radial-gradient(circle, #f2af575f 3%, transparent 1%) 0 0,
+        radial-gradient(circle, #f2af575f 3%, transparent 1%) 15px 15px,
+        radial-gradient(circle, #f2af575f 3%, transparent 1%) 30px 0,
+        radial-gradient(circle, #f2af575f 3%, transparent 1%) 45px 15px;
+    background-size: 60px 30px;
+    background-color: rgb(0 0 0 / 93%);
+    opacity: 1;
+    height: 100vh;
+    margin: 0;
+    animation: floatParticles 20s linear infinite alternate;
+}
+
+@keyframes floatParticles {
+    0% {
+        background-position: 0 0, 15px 15px, 30px 0, 45px 15px;
     }
 
-    .dark-grey-background {
-        background-color: #3a3a3a; 
-        color: white; 
-        min-height: 100vh; 
+    25% {
+        background-position: 10px 5px, 25px 20px, 40px 10px, 55px 25px;
     }
 
-    .darker-grey-bg {
-        background-color: #333; /* Darker gray color */
-        color: #fff; /* Optional: Change text color to white for better contrast */
+    50% {
+        background-position: 20px 10px, 35px 25px, 50px 20px, 65px 35px;
     }
+
+    75% {
+        background-position: 30px 15px, 45px 30px, 60px 10px, 75px 40px;
+    }
+
+    100% {
+        background-position: 40px 20px, 55px 35px, 70px 20px, 85px 45px;
+    }
+}
+
+.darker-grey-bg {
+    background-color: #474747;
+    color: #fff;
+}

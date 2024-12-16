@@ -5,7 +5,7 @@
 
 <PageTitle>Leaderboard</PageTitle>
 
-<h1>Leaderboard</h1>
+<h1 class="leaderboard-text">Leaderboard</h1>
 
 <div class="leaderboard-grid">
     @foreach (var game in Enum.GetValues(typeof(AvailableGames)).Cast<AvailableGames>()) {
@@ -32,7 +32,7 @@
                 </table>
             }
             else {
-                <p class="leaderboard-text">No data available</p><b>Leaderboard is empty</b>
+                <p class="leaderboard-text">No data available</p><b class="leaderboard-text">Leaderboard is empty</b>
             }
         </div>
     }

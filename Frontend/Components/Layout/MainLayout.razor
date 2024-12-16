@@ -3,25 +3,25 @@
 @inject NavigationManager _nav
 @inherits LayoutComponentBase
 
-<div class="page dark-grey-background">
+<div class="page body">
 
     <main>
         <div class="top-row px-4 flex-container darker-grey-bg">
             
             <div>
-                <button class="btn btn-warning" @onclick="@(()=>_nav.NavigateTo(""))">
+                <button class="pageButton" @onclick="@(()=>_nav.NavigateTo(""))">
                     Home
                 </button>
-                <button class="btn btn-warning" @onclick="@(()=>_nav.NavigateTo("/Leaderboard"))">
+                <button style="margin-left: 10px" class="pageButton" @onclick="@(()=>_nav.NavigateTo("/Leaderboard"))">
                     Leaderboard
                 </button>
             </div>
             
-            <h3>itssoover Mind Games</h3>
+            <h3>itssoover Games</h3>
             <div class="flex-right">
                 <AuthorizeView>
                     <Authorized>
-                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @context.User.Identity?.Name!</a>
+                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @context.User.Identity?.Name!</a>
                         <LogoutButton />
                     </Authorized>
                     <NotAuthorized>

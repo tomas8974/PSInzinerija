@@ -2,7 +2,7 @@
 
 @using Frontend.Games.SimonSays
 
-<PageTitle>@gameInfo?.GameName ?? SimonSays</PageTitle>
+<PageTitle>@(gameInfo?.GameName ?? "SimonSays")</PageTitle>
 
 <div style=" height: 85vh;">
     <h2 style="font-size: 25px; color: white;">High Score: @gameManager.HighScore</h2>

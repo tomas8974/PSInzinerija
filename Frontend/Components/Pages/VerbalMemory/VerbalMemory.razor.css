@@ -1,4 +1,5 @@
 .game-container {
+    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,6 +8,11 @@
     font-family: Arial, sans-serif;
     background-color: #3a3a3a00;
     box-sizing: border-box;
+}
+
+.mistake-counter {
+    padding: 1rem;
+    font-size: 2rem;
 }
 
 .word-display {
@@ -18,6 +24,7 @@
     padding: 20px 40px;
     border-radius: 10px;
     color: white;
+    background-color: #fead18;
 }
 
 
@@ -33,13 +40,6 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    background-color: #fd950d;
-    color: white;
-    transition: background-color 0.3s ease;
-}
-
-.game-button:hover {
-    background-color: royalblue;
 }
 
 .error-message {

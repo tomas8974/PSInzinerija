@@ -6,7 +6,7 @@
 
 <h1 style="display: flex; justify-content: space-between; align-items: center; font-size: 30px; margin: 0;">
     <div>
-        <button class="otherButton" @onclick="async () => await DeleteHS(Manager)">Reset HighScore</button>
+        <button class="clickable-button pageButton" @onclick="async () => await DeleteHS(Manager)">Reset HighScore</button>
         <span style="color: white;">High-score: @Manager.HighScore</span>
     </div>
     <span style="margin-left: auto; color: white;">Recent Score: @Manager.RecentScore Current Score: @Manager.Score</span>

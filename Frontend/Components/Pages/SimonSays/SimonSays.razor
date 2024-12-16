@@ -27,7 +27,7 @@
             }
         </div>
         <div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 3em;">
-            <button class="otherButton" disabled="@gameManager.IsDisabled"
+            <button class="pageButton largePageButton"  disabled="@gameManager.IsDisabled"
                 @onclick="@(async () => {@gameManager.IsDisabled=true; await gameManager.StartNewGame();})">New
                 Game</button>
         </div>

@@ -11,14 +11,14 @@
 }
 
 .number-display {
-    font-size: 3rem;
+    font-size: 5rem;
     font-weight: bold;
     color: #fd950d;
     margin: 20px 0;
 }
 
 .input-box {
-    width: 30%;
+    width: 400px;
     padding: 10px;
     font-size: 1.2rem;
     margin: 10px 0;
@@ -29,8 +29,8 @@
 .button {
     background-color: #fd950d;
     color: #fff;
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: 20px 40px;
+    font-size: 1.5rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;

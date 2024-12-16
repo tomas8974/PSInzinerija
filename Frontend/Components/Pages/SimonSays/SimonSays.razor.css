@@ -1,5 +1,5 @@
 .buttonDefault{
-    background-color: white;
+    background-color: #ffffff;
     padding: 32px 32px;
     border: 2px solid #000000;
     display: inline-block;
@@ -10,7 +10,7 @@
     outline: none;
     color: black;
     border-radius: 15px;
-    box-shadow: 0 7px  7px #999;
+    box-shadow: 0 7px  7px #474747;
     transition: border-width 0.1s ease-in-out box-shadow 0.1s ease-in-out;
     box-sizing: border-box;
 }
@@ -19,7 +19,7 @@
 
 .buttonDefault.pressed.valid{
     border-width: 5px;
-    background-color: cyan;
+    background-color: #fd950d;
     box-shadow: 0 2px 2px #3f3f3f;
 }
 
@@ -48,6 +48,23 @@
     margin: 0 auto;
     width: 200px;
 }
+.error {
+    background-color: red;
+}
 
+.otherButton {
+    background-color: #fd950d;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
 
-
+.largePageButton {
+    padding: 20px 40px; /* Increase padding */
+    font-size: 20px; /* Increase font size */
+}

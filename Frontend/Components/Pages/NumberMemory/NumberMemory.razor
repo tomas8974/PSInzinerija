@@ -1,0 +1,60 @@
+@page "/NumberMemory"
+
+@using Frontend.Games.NumberMemory
+
+<PageTitle>NumberMemory</PageTitle>
+
+<h2 style=" color: white;">High Score: @Manager.HighScore</h2>
+<h2 style=" color: white;">Current Score: @Manager.Score</h2>
+
+<div class="game-container" style=" color: white;" @ref="GameElement" @onkeydown="HandleKeyPress" tabindex="0">
+    @if (Manager.GameOver)
+    {
+        <h3>Game Over</h3>
+        <p>Your Score: @Manager.Score</p>
+        <button class="pageButton" @onclick="Manager.StartNewGame">Start New Game</button>
+    }
+    else
+    {
+        @if (Manager.ShowNumber)
+        {
+            <p class="number-display">@Manager.CurrentNumber</p>
+        }
+        else
+        {
+            <div style="margin-top: 50px;">
+                <input class="input-box" @ref="InputElement" value="@Manager.UserInput"
+                    @oninput="e => Manager.UserInput = e.Value?.ToString() ?? string.Empty" placeholder="Enter the number" />
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="pageButton" @onclick="Manager.CheckUserInput">Submit</button>
+            </div>
+        }
+    }
+</div>
+
+<div class="game-rules"
+     style="margin-top: 20px; color: white;">
+    <h3>Rules:</h3>
+    <p>Remember the numbers that appear on the screen.</p>
+    <p>After the numbers disappear, enter the numbers in the order they appeared.</p>
+    <p>Get as many correct as you can!</p>
+</div>
+@code {
+    protected ElementReference InputElement;
+    protected ElementReference GameElement;
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            if (!Manager.GameOver)
+            {
+                await Manager.CheckUserInput();
+            }
+            else
+            {
+                await Manager.StartNewGame();
+            }
+        }
+    }
+}

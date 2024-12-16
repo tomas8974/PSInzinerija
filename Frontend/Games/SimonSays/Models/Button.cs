@@ -2,6 +2,7 @@ namespace Frontend.Games.SimonSays.Models
 {
     public class Button
     {
+        public bool IsError { get; private set; } = false;
         public string Text { get; set; }
         public int Index { get; set; }
         public bool IsLit { get; set; } = false;
@@ -17,8 +18,18 @@ namespace Frontend.Games.SimonSays.Models
 
         public async Task OnClick(Action buttonPressed)
         {
-            if (gameInstance.IsShowingSequence || gameInstance.GameOver || IsDisabled)
+            if (gameInstance.IsShowingSequence || IsDisabled)
+            return;
+
+            if (gameInstance.GameOver)
+            {
+                IsError = true;
+                buttonPressed.Invoke();
+                await FlashRed();
+                IsError = false;
+                buttonPressed.Invoke(); 
                 return;
+            }
 
             IsDisabled = true;
             IsLit = true;
@@ -43,6 +54,12 @@ namespace Frontend.Games.SimonSays.Models
             colorChanged?.Invoke();
             if (disableButton)
                 gameInstance.IsShowingSequence = false;
+        }
+        public async Task FlashRed()
+        {
+            IsError = true;
+            await Task.Delay(500); // Adjust the delay as needed
+            IsError = false;
         }
     }
 }

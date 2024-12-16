@@ -23,7 +23,7 @@ namespace Backend.Controllers
                 return BadRequest();
             }
 
-            var filePath = Path.Combine("GameRules/", fileName);
+            var filePath = Path.Combine("WordListSources/", fileName);
             var words = await _wordListService.GetWordsFromFileAsync(filePath);
 
             if (words == null || words.Count == 0)

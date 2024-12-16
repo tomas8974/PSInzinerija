@@ -3,52 +3,33 @@ using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 using Shared.Enums;
 using Frontend.Services;
-using Frontend.Games.VerbalMemory;
+using Frontend.Games.NumberMemory;
 using Frontend.Games;
 using Frontend.Extensions;
-using Frontend.Exceptions;
 
-namespace Frontend.Components.Pages.VerbalMemory
+namespace Frontend.Components.Pages.NumberMemory
 {
-    public partial class VerbalMemory : ComponentBase
+    public partial class NumberMemory : ComponentBase
     {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable CS8618
         [Inject]
         HighScoreAPIService HighScoreAPIService { get; set; }
         [Inject]
         ProtectedSessionStorage SessionStorage { get; set; }
         [Inject]
-        WordListAPIService WordListAPIService { get; set; }
-        [Inject]
-        ILogger<VerbalMemory> Logger { get; set; }
-
-        VerbalMemoryManager Manager { get; set; } = new VerbalMemoryManager();
-
-        bool LoadFailed { get; set; } = false;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+        ILogger<NumberMemory> Logger { get; set; }
+#pragma warning restore CS8618
+        NumberMemoryManager Manager { get; set; } = new NumberMemoryManager();
 
         protected override async Task OnInitializedAsync()
         {
-            List<string>? wordList = null;
-            try
+            Manager.OnStateChanged = StateHasChanged;
+            Manager.OnStatisticsChanged += async () =>
             {
-                wordList = await WordListAPIService.GetWordsFromApiAsync("RandomWords.txt");
-            }
-            catch (WordListLoadException ex)
-            {
-                Logger.LogError("Error loading word list: {errorMessage}", ex.Message);
-                LoadFailed = true;
-            }
-
-            if (wordList != null && wordList.Any())
-            {
-                Manager.OnStatisticsChanged += async () =>
-                {
-                    await SaveToDB(Manager);
-                    await SessionStorage.SaveStateSessionStorage(Manager);
-                };
-                await Manager.StartNewGame(wordList);
-            }
+                await SaveToDB(Manager);
+                await SessionStorage.SaveStateSessionStorage(Manager);
+            };
+            await Manager.StartNewGame();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -57,7 +38,16 @@ namespace Frontend.Components.Pages.VerbalMemory
             {
                 await FetchDataAsync();
             }
+            if (!Manager.ShowNumber && !Manager.GameOver)
+            {
+                await InputElement.FocusAsync();
+            }
+            if (Manager.GameOver)
+            {
+                await GameElement.FocusAsync();
+            }
         }
+
 
         // TODO: iskelti kitur
         private async Task SaveToDB(IGameManager gameManager)
@@ -77,7 +67,7 @@ namespace Frontend.Components.Pages.VerbalMemory
 
         private async Task FetchDataAsync()
         {
-            var res = await HighScoreAPIService.GetHighScoreAsync(AvailableGames.VerbalMemory);
+            var res = await HighScoreAPIService.GetHighScoreAsync(AvailableGames.NumberMemory);
             if (res != null)
             {
                 Manager.SetHighScore(res.Value);

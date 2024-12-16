@@ -1,0 +1,42 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.JSInterop
+@inject NavigationManager _nav
+@using Shared.Enums
+@using Frontend.Services
+@using Shared.Data.Models
+@using Frontend.Components.LoginForm
+
+<PageTitle>Home</PageTitle>
+
+    <AuthorizeView>
+        <NotAuthorized>
+            <div style="margin-bottom: 100px;">
+                <LoginForm />
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>
+
+    <div class="game-buttons-grid" style="display: grid; gap: 10px; width: 45vh; margin: 0 auto; height: 45vh; position: relative;">
+            
+        @foreach (var game in Enum.GetValues(typeof(AvailableGames)).Cast<AvailableGames>()) {
+            <button class="pageButton clickable-button moves-on-hover game-selection-button" @onclick="@(() => _nav.NavigateTo($"/{game}"))">
+                @game
+            </button>
+        }
+    </div>
+    
+
+
+
+@code {
+    [Inject]
+    protected IJSRuntime JSRuntime { get; set; }
+
+    protected override void OnAfterRender(bool firstRender) {
+        if(firstRender)
+            JSRuntime.InvokeVoidAsync("onBlazorReadyLog");
+    }
+}    
+

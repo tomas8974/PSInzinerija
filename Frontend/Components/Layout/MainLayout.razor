@@ -1,24 +1,34 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Components.Authorization
-
+@inject NavigationManager _nav
 @inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<div class="page body">
 
     <main>
-        <div class="top-row px-4">
-        <AuthorizeView>
-            <Authorized>
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @context.User.Identity?.Name!</a>
-                <LogoutButton />
-            </Authorized>
-            <NotAuthorized>
-                You are not logged in
-            </NotAuthorized>
-        </AuthorizeView>
+        <div class="top-row px-4 flex-container darker-grey-bg">
+            
+            <div>
+                <button class="pageButton" @onclick="@(()=>_nav.NavigateTo(""))">
+                    Home
+                </button>
+                <button style="margin-left: 10px" class="pageButton" @onclick="@(()=>_nav.NavigateTo("/Leaderboard"))">
+                    Leaderboard
+                </button>
+            </div>
+            
+            <h3>itssoover Games</h3>
+            <div class="flex-right">
+                <AuthorizeView>
+                    <Authorized>
+                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @context.User.Identity?.Name!</a>
+                        <LogoutButton />
+                    </Authorized>
+                    <NotAuthorized>
+                        You are not logged in
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
         </div>
 
         <article class="content px-4">

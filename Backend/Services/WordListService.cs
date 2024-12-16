@@ -12,7 +12,7 @@ namespace Backend.Services
             var fileContent = await File.ReadAllTextAsync(filePath);
             var words = fileContent
                 .Split(new[] { ' ', ',', '.', ';', ':', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
-                .Where(word => word.All(c => !char.IsPunctuation(c)))
+                .Where(word => word.All(c => !char.IsPunctuation(c)) && word.All(c => char.IsLetter(c)))
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList();
 

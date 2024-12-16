@@ -109,6 +109,7 @@ namespace Frontend.Games.SimonSays
                 GameOver = true;
                 Level = 0;
                 IsDisabled = false;
+                await Buttons[tileIndex].FlashRed();
                 return;
             }
 

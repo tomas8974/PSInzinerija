@@ -34,6 +34,60 @@ namespace FrontendTests
         }
 
         [Fact]
+        public async Task MemoryManager_RestartsGame_AfterThreeMistakes()
+        {
+            // Arrange
+            var manager = new VisualMemoryManager();
+            await manager.StartNewGame();
+            int mistakes = 0;
+            Pattern initialPattern = manager.Pattern;
+
+            // Act
+            foreach (var cell in initialPattern)
+            {
+                if (cell.Value == PatternValue.Invalid)
+                {
+                    await manager.HandleInput(cell);
+                    mistakes++;
+                    if (mistakes == 3)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // Assert
+            Assert.Equal(3, mistakes);
+            Assert.Equal(0, manager.Score);
+            Assert.NotEqual(initialPattern, manager.Pattern);
+        }
+
+        [Fact]
+        public async Task MemoryManager_AdvancesToNextLevel_WhenAllValidButtonsArePressed()
+        {
+            // Arrange
+            var manager = new VisualMemoryManager();
+            await manager.StartNewGame();
+            Pattern initialPattern = manager.Pattern;
+            List<PatternCell> initialPatternCells = [.. manager.Pattern];
+            int initialValidCellAmount = manager.Pattern.ValidCellAmount;
+
+            // Act
+            foreach (var cell in initialPattern)
+            {
+                if (cell.Value == PatternValue.Valid)
+                {
+                    await manager.HandleInput(cell);
+                }
+            }
+
+            // Assert
+            Assert.Equal(1, manager.Score);
+            Assert.True(initialValidCellAmount < manager.Pattern.ValidCellAmount);
+            Assert.NotEqual(initialPatternCells, [.. manager.Pattern]);
+        }
+
+        [Fact]
         public void LoadStatisticsFromJSON_UpdatesHighScoreFromValidJSON()
         {
             var manager = new VisualMemoryManager();
@@ -77,7 +131,7 @@ namespace FrontendTests
             var invalidCell = new PatternCell(PatternValue.Invalid, 0);
 
             Assert.Equal(0, manager.GameMistakes);
-            
+
             await manager.HandleInput(invalidCell);
 
             Assert.Equal(1, manager.GameMistakes);

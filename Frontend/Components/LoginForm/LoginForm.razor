@@ -38,27 +38,11 @@
             password = loginModel.Password
         };
 
-        try
+        var fullURL = client.BaseAddress + url;
+        var success = await JS.InvokeAsync<bool>("postLogin", fullURL, formData.email, formData.password);
+        if (success)
         {
-            var response = await client.PostAsJsonAsync(url, formData);
-
-            if (response.IsSuccessStatusCode && response.Headers.TryGetValues("Set-Cookie", out var cookies))
-            {
-                Console.WriteLine(cookies.First());
-                var cookie = cookies.First().Split(';').Where(s => !s.Contains("httponly")).Aggregate("", (a, s) => a + s + ";");
-                await JS.InvokeVoidAsync("saveCookie", cookie);
-                
-                NavigationManager.Refresh(true);
-            }
-            else
-            {
-                // Handle login failure (you can display an error message, for example)
-                Console.WriteLine("Login failed: " + response.ReasonPhrase);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("An error occurred: " + ex.Message);
+            NavigationManager.Refresh(true);
         }
     }
 

@@ -10,23 +10,9 @@
     private async Task Logout()
     {
         var client = ClientFactory.CreateClient("BackendApi");
-        try
-        {
-            var response = await client.PostAsync("api/logout", null);
-            if (response.IsSuccessStatusCode)
-            {
-                string cookie = ".AspNetCore.Identity.Application=";
-                await JS.InvokeVoidAsync("saveCookie", cookie);
-                NavigationManager.NavigateTo("/", true);
-            }
-            else
-            {
-                Console.WriteLine("Logout failed.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error during logout: {ex.Message}");
-        }
+
+        var url = client.BaseAddress + "api/logout";
+        await JS.InvokeVoidAsync("postVoidAsync", url);
+        NavigationManager.NavigateTo("/", true);
     }
 }

@@ -30,7 +30,7 @@
 @code {
     List<ToastMessage> messages = new();
     private LoginModel loginModel = new LoginModel();
-    record ResponseObject(bool success, string message);
+    record ResponseObject(int status, string message);
 
     private async Task HandleLogin()
     {
@@ -45,11 +45,13 @@
         var fullURL = client.BaseAddress + url;
         
         var responseObject = await JS.InvokeAsync<ResponseObject>("postLogin", fullURL, formData.email, formData.password);
-        Console.WriteLine(responseObject.success);
-        if (responseObject.success)
+        Console.WriteLine(responseObject.status);
+        if (responseObject.status == StatusCodes.Status200OK)
         {
             NavigationManager.Refresh(true);
-        } else {
+        } 
+        else
+        {
             Console.WriteLine($"Response message was: {responseObject.message}");
             JsonNode? node = JsonNode.Parse(responseObject.message);
             int? status = null;

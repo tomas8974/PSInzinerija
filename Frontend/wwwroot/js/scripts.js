@@ -35,9 +35,10 @@ async function postLogin(url, email, password) {
     };
 
     const returnObj = {
-        success: false,
+        status: 401,
         message: ""
     }
+    console.log("fetching from: ", url);
 
     return fetch(url, {
         method: "POST",
@@ -49,7 +50,7 @@ async function postLogin(url, email, password) {
     }).then(async response => {
         // Check if response status is successful (2xx)
         returnObj.message = await response.text();
-        returnObj.success = response.ok && response.status == 200;
+        returnObj.status = response.status;
         return returnObj;
     }).catch(error => {
         console.error("Request failed", error);

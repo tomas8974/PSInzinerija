@@ -1,6 +1,8 @@
+@using System.Text.Json.Nodes
 @inject IHttpClientFactory HttpClientFactory
 @inject NavigationManager NavigationManager
 
+<Toasts class="p-3 text-dark" Messages="messages" AutoHide="true" Delay="6000" Placement="ToastsPlacement.BottomLeft" />
 <EditForm Model="@registrationModel" class="authentication-form" OnValidSubmit="HandleRegistration">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -24,11 +26,12 @@
 </EditForm>
 
 @code {
+    List<ToastMessage> messages = new();
     private RegistrationModel registrationModel = new();
 
     private async Task HandleRegistration()
     {
-        var url = "register"; // Backend register URL
+        var url = "api/register"; // Backend register URL
         var client = HttpClientFactory.CreateClient("BackendApi");
         var formData = new
         {
@@ -48,12 +51,31 @@
             }
             else
             {
+                JsonNode? node = JsonNode.Parse(await response.Content.ReadAsStringAsync());
                 // Handle registration failure (you can display an error message, for example)
-                Console.WriteLine("Registration failed: " + response.ReasonPhrase);
+                string? errorMessage = node?["errors"]?.AsObject()?.Aggregate("", (a, p) => {
+                    return a + "\n" + p.Key + ": " + p.Value?.AsArray()?.Aggregate("", (ag, node) => ag + node?.ToString()+ " ");
+                });
+
+                ToastMessage message = new () {
+                    Type = ToastType.Danger,
+                    Title = "Registration failed!",
+                    HelpText = $"{DateTime.Now}",
+                    Message = errorMessage ?? "Unkown error occurred"
+                };
+                messages.Add(message);
+                Console.WriteLine("Registration failed: " + await response.Content.ReadAsStringAsync());
             }
         }
         catch (Exception ex)
         {
+            ToastMessage message = new () {
+                Type = ToastType.Danger,
+                Title = "Registration failed!",
+                HelpText = $"{DateTime.Now}",
+                Message = "Unkown error occurred"
+            };
+            messages.Add(message);
             Console.WriteLine("An error occurred: " + ex.Message);
         }
     }

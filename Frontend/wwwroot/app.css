@@ -96,6 +96,7 @@ h1:focus {
 }
 
 .pageButton:hover {
+    color: white;
     box-shadow: 0 0 15px rgba(255, 150, 13, 0.5);
     filter: brightness(1.2);
 }

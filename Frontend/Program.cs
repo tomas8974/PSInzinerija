@@ -9,23 +9,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
+var configuration = builder.Configuration;
+
+string backendAddress = configuration.GetValue<string>("BackendAddress") ?? throw new InvalidOperationException("BackendAddress is missing from configuration");
 builder.Services.AddHttpClient("BackendApi", options =>
 {
-    options.BaseAddress = new Uri("http://localhost:5211");
+    options.BaseAddress = new Uri(backendAddress);
     options.DefaultRequestHeaders.Add("Access-Control-Allow-Credentials", "true");
-}).AddHeaderPropagation();
+})
+.AddHeaderPropagation();
 
 builder.Services.AddHeaderPropagation(options =>
 {
     options.Headers.Add("Cookie");
 });
 
+builder.Services.AddBlazorBootstrap();
 builder.Services.AddScoped<HighScoreAPIService>();
 builder.Services.AddScoped<WordListAPIService>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityAuthenticationStateProvider>();
 builder.Services.AddScoped<StatsAPIService<VisualMemoryStats>>();
 builder.Services.AddScoped<StatsAPIService<SimonSaysStats>>();
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddCascadingAuthenticationState();
 
 // Add services to the container.

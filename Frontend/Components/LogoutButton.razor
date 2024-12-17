@@ -1,4 +1,5 @@
-<button @onclick="Logout" class="nav-link btn btn-link text-dark">Logout</button>
+@inject IJSRuntime JS
+<button @onclick="Logout" class="nav-link btn btn-link text-white">Logout</button>
 
 @code {
     [Inject]
@@ -9,21 +10,9 @@
     private async Task Logout()
     {
         var client = ClientFactory.CreateClient("BackendApi");
-        try
-        {
-            var response = await client.PostAsync("/logout", null);
-            if (response.IsSuccessStatusCode)
-            {
-                NavigationManager.NavigateTo("/", true);
-            }
-            else
-            {
-                Console.WriteLine("Logout failed.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error during logout: {ex.Message}");
-        }
+
+        var url = client.BaseAddress + "api/logout";
+        await JS.InvokeVoidAsync("postVoidAsync", url);
+        NavigationManager.NavigateTo("/", true);
     }
 }

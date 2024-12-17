@@ -8,6 +8,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 
+using Backend.Data.Models;
+
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +20,8 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+
+using Shared.Data.Models;
 
 namespace Microsoft.AspNetCore.Routing;
 
@@ -51,7 +55,22 @@ public static class IdentityApiEndpointRouteBuilderExtensions
         // We'll figure out a unique endpoint name based on the final route pattern during endpoint generation.
         string? confirmEmailEndpointName = null;
 
-        var routeGroup = endpoints.MapGroup("");
+        var routeGroup = endpoints.MapGroup("/api");
+
+        routeGroup.MapPost("/logout", async (SignInManager<User> signInManager) =>
+        {
+            await signInManager.SignOutAsync();
+        })
+        .RequireAuthorization();
+
+        routeGroup.MapGet("/user/info", async Task<Results<Ok<UserInfo>, ValidationProblem, NotFound>>
+            (ClaimsPrincipal claimsPrincipal, [FromServices] IServiceProvider sp) =>
+        {
+            var userManager = sp.GetRequiredService<UserManager<User>>();
+            return await userManager.GetUserAsync(claimsPrincipal) is not { } user
+                ? (Results<Ok<UserInfo>, ValidationProblem, NotFound>)TypedResults.NotFound()
+                : TypedResults.Ok(new UserInfo(user.Email, user.UserName));
+        });
 
         // NOTE: We cannot inject UserManager<TUser> directly because the TUser generic parameter is currently unsupported by RDG.
         // https://github.com/dotnet/aspnetcore/issues/47338

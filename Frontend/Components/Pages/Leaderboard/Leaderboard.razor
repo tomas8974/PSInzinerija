@@ -13,11 +13,11 @@
             <h2 class="leaderboard-text">@game Leaderboard</h2>
             @if (leaderboards.ContainsKey(game) && leaderboards[game].Count != 0) {
                 <table class="table table-hover table-striped leaderboard-text">
-                    <thead class="thead-light">
+                    <thead class="thead-light text-white">
                         <tr>
-                            <th scope="col">Username</th>
-                            <th scope="col">High score</th>
-                            <th scope="col">Date (UTC)</th>
+                            <th class="text-white" scope="col">Username</th>
+                            <th class="text-white" scope="col">High score</th>
+                            <th class="text-white" scope="col">Date (UTC)</th>
                         </tr>
                     </thead>
                     <tbody>

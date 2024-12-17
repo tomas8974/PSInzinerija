@@ -1,7 +1,10 @@
+@using System.Text.Json.Nodes
 @inject IHttpClientFactory HttpClientFactory
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JS
 
 
+<Toasts class="p-3" Messages="messages" AutoHide="true" Delay="6000" Placement="ToastsPlacement.BottomLeft" />
 <EditForm Model="@loginModel" class="authentication-form" OnValidSubmit="HandleLogin">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -17,19 +20,21 @@
     </div>
 
     <div class="button-container" >
-        <button class="pageButton clickable-button"@onclick="@(() => NavigationManager.NavigateTo($"/registration"))">
+        <NavLink class="pageButton clickable-button" href="registration">
             Registration
-        </button>
+        </NavLink>
         <button type="submit" class="pageButton clickable-button">Login</button>
     </div>
 </EditForm>
 
 @code {
+    List<ToastMessage> messages = new();
     private LoginModel loginModel = new LoginModel();
+    record ResponseObject(int status, string message);
 
     private async Task HandleLogin()
     {
-        var url = "login?useCookies=true&useSessionCookies=true"; // Backend login URL
+        var url = "api/login?useCookies=true&useSessionCookies=true"; // Backend login URL
         var client = HttpClientFactory.CreateClient("BackendApi");
         var formData = new
         {
@@ -37,24 +42,31 @@
             password = loginModel.Password
         };
 
-        try
+        var fullURL = client.BaseAddress + url;
+        
+        var responseObject = await JS.InvokeAsync<ResponseObject>("postLogin", fullURL, formData.email, formData.password);
+        Console.WriteLine(responseObject.status);
+        if (responseObject.status == StatusCodes.Status200OK)
         {
-            var response = await client.PostAsJsonAsync(url, formData);
-
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("Success!");
-                NavigationManager.Refresh(true);
-            }
-            else
-            {
-                // Handle login failure (you can display an error message, for example)
-                Console.WriteLine("Login failed: " + response.ReasonPhrase);
-            }
-        }
-        catch (Exception ex)
+            NavigationManager.Refresh(true);
+        } 
+        else
         {
-            Console.WriteLine("An error occurred: " + ex.Message);
+            Console.WriteLine($"Response message was: {responseObject.message}");
+            JsonNode? node = JsonNode.Parse(responseObject.message);
+            int? status = null;
+            try {
+                status = node?["status"]?.GetValue<int>();
+            } catch {
+                Console.WriteLine("Error parsing status");
+            }
+            ToastMessage message = new () {
+                Type = ToastType.Danger,
+                Title = "Login failed!",
+                HelpText = $"{DateTime.Now}",
+                Message = status == StatusCodes.Status401Unauthorized ? "Incorrect email or password." : "Unkown error."
+            };
+            messages.Add(message);
         }
     }
 

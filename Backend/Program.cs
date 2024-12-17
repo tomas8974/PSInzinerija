@@ -14,18 +14,18 @@ using PSInzinerija1.Shared.Data.Models.Stats;
 using Shared.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 var configuration = builder.Configuration;
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Services.AddHttpClient();
 
+string frontendAddress = configuration.GetValue<string>("FrontendAddress") ?? throw new InvalidOperationException("FrontendAddress is missing from configuration");
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5142")
+        policy.WithOrigins(frontendAddress)
             .AllowCredentials()
             .AllowAnyMethod()
             .AllowAnyHeader();
@@ -95,8 +95,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-    using var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-    context?.Database.EnsureCreated();
+    using var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context?.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.
@@ -108,8 +108,13 @@ if (!app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+}
+app.UseSwagger();
+app.UseSwaggerUI();
+using (var scope = app.Services.CreateScope())
+{
+    var dbcontext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbcontext.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
@@ -126,25 +131,6 @@ app.MapSwagger();
 
 app.MapModifiedIdentityApi<User>();
 app.MapControllers();
-
-// temp
-app.MapPost("/logout", async (SignInManager<User> signInManager) =>
-{
-    await signInManager.SignOutAsync();
-    return TypedResults.Ok();
-})
-.RequireAuthorization();
-
-// temp
-app.MapGet("/user/info", async Task<Results<Ok<UserInfo>, ValidationProblem, NotFound>>
-    (ClaimsPrincipal claimsPrincipal, [FromServices] IServiceProvider sp) =>
-{
-    var userManager = sp.GetRequiredService<UserManager<User>>();
-    return await userManager.GetUserAsync(claimsPrincipal) is not { } user
-        ? (Results<Ok<UserInfo>, ValidationProblem, NotFound>)TypedResults.NotFound()
-        : TypedResults.Ok(new UserInfo(user.Email, user.UserName));
-});
-
 
 app.Run();
 

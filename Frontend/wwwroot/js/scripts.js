@@ -34,6 +34,11 @@ async function postLogin(url, email, password) {
         password: password
     };
 
+    const returnObj = {
+        success: false,
+        message: ""
+    }
+
     return fetch(url, {
         method: "POST",
         headers: {
@@ -41,15 +46,14 @@ async function postLogin(url, email, password) {
         },
         body: JSON.stringify(formData),
         credentials: "include"
-    }).then(response => {
+    }).then(async response => {
         // Check if response status is successful (2xx)
-        if (response.ok) {
-            return true;  // If the request is successful
-        } else {
-            return false;  // If the request failed
-        }
+        returnObj.message = await response.text();
+        returnObj.success = response.ok && response.status == 200;
+        return returnObj;
     }).catch(error => {
         console.error("Request failed", error);
-        return false;  // If there is an error with the fetch itself
+        returnObj.message = "An unexpected error occured";
+        return returnObj;
     });
 }

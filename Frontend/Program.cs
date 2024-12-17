@@ -24,6 +24,7 @@ builder.Services.AddHeaderPropagation(options =>
     options.Headers.Add("Cookie");
 });
 
+builder.Services.AddBlazorBootstrap();
 builder.Services.AddScoped<HighScoreAPIService>();
 builder.Services.AddScoped<WordListAPIService>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityAuthenticationStateProvider>();

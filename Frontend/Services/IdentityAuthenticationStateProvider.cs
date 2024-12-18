@@ -32,7 +32,7 @@ namespace Frontend.Services
             }
             catch (Exception e)
             {
-                _logger.LogInformation("{errorMessage}", e.Message);
+                _logger.LogInformation("Error while trying to get user info! {errorMessage}", e.Message);
             }
 
             if (userInfo == null)

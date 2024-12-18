@@ -11,12 +11,13 @@ function getCookie(name) {
 }
 
 async function postVoidAsync(url) {
+    const betterUrl = url.replace("backend", "localhost"); // atsiprasau visu kas tai matys, nenaudokit blazoriaus.
     $.ajax({
-        url: url, // Replace with your API URL
+        url: betterUrl,
         type: 'POST',
-        contentType: 'application/json',  // Set the content type to JSON
+        contentType: 'application/json',
         xhrFields: {
-            withCredentials: true  // Allow cookies to be sent with the request
+            withCredentials: true
         },
         success: function (response) {
             console.log("Logout successful:", response);
@@ -40,7 +41,9 @@ async function postLogin(url, email, password) {
     }
     console.log("fetching from: ", url);
 
-    return fetch(url, {
+    const betterUrl = url.replace("backend", "localhost"); // atsiprasau visu kas tai matys, nenaudokit blazoriaus.
+
+    return fetch(betterUrl, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -48,7 +51,6 @@ async function postLogin(url, email, password) {
         body: JSON.stringify(formData),
         credentials: "include"
     }).then(async response => {
-        // Check if response status is successful (2xx)
         returnObj.message = await response.text();
         returnObj.status = response.status;
         return returnObj;

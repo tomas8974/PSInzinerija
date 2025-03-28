@@ -28,10 +28,10 @@ jobs:
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
     - name: Give execute permission to the script
-      run: chmod +x ./your-script.sh  # Replace with your script filename
+      run: chmod +x ./genreport.sh  # Replace with your script filename
 
     - name: Run coverage script
-      run: ./your-script.sh
+      run: ./genreport.sh
 
     - name: Extract Line Coverage from index.html        
       run: |

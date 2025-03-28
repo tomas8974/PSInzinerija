@@ -35,16 +35,13 @@ jobs:
 
     - name: Extract Line Coverage from index.html        
       run: |
-          # Extract the line containing "Line Coverage" from index.html
           coverage_line=$(grep -oP 'Line coverage[^0-9]*\K[0-9]+\.[0-9]+' coveragereport/index.html)
           
-          # Convert to an integer (e.g., "85.6" -> "85")
           coverage_percentage=$(printf "%.0f" "$coverage_line")
 
           echo "Line coverage: $coverage_percentage%"
 
-          # Fail if coverage is below 80%
           if (( coverage_percentage < 80 )); then
-            echo "❌ Code coverage below threshold (80%)!"
+            echo "Code coverage below threshold (80%)!"
             exit 1
           fi

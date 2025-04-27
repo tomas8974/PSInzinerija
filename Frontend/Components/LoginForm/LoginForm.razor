@@ -17,6 +17,11 @@
     <div class="form-group">
         <label for="password" class="white-text">Password</label>
         <InputText id="password" class="form-control light-gray-input" @bind-Value="loginModel.Password" type="password" />
+        <div class="d-flex justify-content-end mt-1">
+            <NavLink href="forgot-password" class="forgot-password-link">
+                Forgot Password?
+            </NavLink>
+        </div>
     </div>
 
     <div class="button-container" >

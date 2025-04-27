@@ -233,7 +233,7 @@ public static class IdentityApiEndpointRouteBuilderExtensions
         });
 
         routeGroup.MapPost("/forgotPassword", async Task<Results<Ok, ValidationProblem>>
-            ([FromBody] ForgotPasswordRequest resetRequest, [FromServices] IServiceProvider sp) =>
+            ([FromBody] ForgotPasswordRequest resetRequest, [FromServices] IServiceProvider sp, [FromServices] IConfiguration configuration) =>
         {
             var userManager = sp.GetRequiredService<UserManager<TUser>>();
             var user = await userManager.FindByEmailAsync(resetRequest.Email);
@@ -243,7 +243,11 @@ public static class IdentityApiEndpointRouteBuilderExtensions
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                await emailSender.SendPasswordResetCodeAsync(user, resetRequest.Email, HtmlEncoder.Default.Encode(code));
+                var frontEndBaseUrl = configuration["FrontendAddress"];
+                var passwordResetUrl = $"{frontEndBaseUrl}/reset-password?email={Uri.EscapeDataString(resetRequest.Email)}&code={code}";
+
+
+                await emailSender.SendPasswordResetLinkAsync(user, resetRequest.Email, passwordResetUrl);
             }
 
             // Don't reveal that the user does not exist or is not confirmed, so don't return a 200 if we would have
@@ -444,7 +448,7 @@ public static class IdentityApiEndpointRouteBuilderExtensions
             var confirmEmailUrl = linkGenerator.GetUriByName(context, confirmEmailEndpointName, routeValues)
                 ?? throw new NotSupportedException($"Could not find endpoint named '{confirmEmailEndpointName}'.");
 
-            await emailSender.SendConfirmationLinkAsync(user, email, HtmlEncoder.Default.Encode(confirmEmailUrl));
+            await emailSender.SendConfirmationLinkAsync(user, email, confirmEmailUrl);
         }
 
         return new IdentityEndpointsConventionBuilder(routeGroup);

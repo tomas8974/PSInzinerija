@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend", "Frontend\Frontend.csproj", "{77088C5F-C90D-4665-8AEB-5285BA7DB66B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frontend", "Frontend\Frontend.csproj", "{77088C5F-C90D-4665-8AEB-5285BA7DB66B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "Backend\Backend.csproj", "{9366A09B-E539-4875-8B8D-14FF94DA9D2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend", "Backend\Backend.csproj", "{9366A09B-E539-4875-8B8D-14FF94DA9D2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendTests", "BackendTests\BackendTests.csproj", "{0469F75F-2DD5-4FF2-A56B-E0549B8EADA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendTests", "BackendTests\BackendTests.csproj", "{0469F75F-2DD5-4FF2-A56B-E0549B8EADA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendTests", "FrontendTests\FrontendTests.csproj", "{CE5F990E-93C9-4407-8C85-DA06C8F2FCE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontendTests", "FrontendTests\FrontendTests.csproj", "{CE5F990E-93C9-4407-8C85-DA06C8F2FCE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{3ACA3B08-BA0C-43F7-B254-43A05FB504DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{3ACA3B08-BA0C-43F7-B254-43A05FB504DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendTests.Integration", "BackendTests.Integration\BackendTests.Integration.csproj", "{7F171A54-FCCA-4113-BCF6-ED436B3EF111}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendTests.Integration", "BackendTests.Integration\BackendTests.Integration.csproj", "{7F171A54-FCCA-4113-BCF6-ED436B3EF111}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,5 +48,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3E494705-502C-4B25-835A-1703AAEC2F1D}
 	EndGlobalSection
 EndGlobal

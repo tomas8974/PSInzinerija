@@ -33,3 +33,9 @@
 .white-text {
     color: white;
 }
+
+.forgot-password-link {
+    text-decoration: underline;
+/*    color: #ffffff;*/
+    cursor: pointer;
+}

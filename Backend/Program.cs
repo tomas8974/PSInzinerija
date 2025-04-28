@@ -12,6 +12,8 @@ using Backend.Data.Models;
 using Backend.Services;
 using PSInzinerija1.Shared.Data.Models.Stats;
 using Shared.Data.Models;
+using Backend.Interfaces;
+using Backend.Wrappers;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -84,12 +86,37 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = false;
 });
 
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+    options.TokenLifespan = TimeSpan.FromMinutes(15);
+});
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     options.SlidingExpiration = true;
+});
+
+builder.Services.AddSingleton<ISmtpClient>(sp =>
+{
+    var smtpHost = builder.Configuration["SmtpSettings:Host"];
+    var smtpPort = int.Parse(builder.Configuration["SmtpSettings:Port"]);
+    var smtpUsername = builder.Configuration["SmtpSettings:Username"];
+    var smtpPassword = builder.Configuration["SmtpSettings:Password"];
+    var useSsl = bool.Parse(builder.Configuration["SmtpSettings:UseSsl"]);
+
+    return new SmtpClientWrapper(smtpHost, smtpPort, smtpUsername, smtpPassword, useSsl);
+});
+
+builder.Services.AddSingleton<IEmailSender<User>, EmailSendingService>(sp =>
+{
+    var smtpClient = sp.GetRequiredService<ISmtpClient>();
+    var fromEmail = builder.Configuration["SmtpSettings:FromEmail"];
+    var fromName = builder.Configuration["SmtpSettings:FromName"];
+
+    return new EmailSendingService(smtpClient, fromEmail, fromName);
 });
 
 var app = builder.Build();
